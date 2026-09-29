@@ -22,6 +22,24 @@
   }
 
   // ============================================================
+  // ЦВЕТОЧНЫЙ ФОН
+  // ============================================================
+  const petalsBg = document.getElementById('petalsBg');
+  const petalChars = ['🌸', '🌺', '🌷', '🌹', '💐', '🌼', '💮'];
+  const PETAL_COUNT = window.innerWidth < 600 ? 8 : 18;
+
+  for (let i = 0; i < PETAL_COUNT; i++) {
+    const petal = document.createElement('span');
+    petal.className = 'petal';
+    petal.textContent = petalChars[Math.floor(Math.random() * petalChars.length)];
+    petal.style.left = Math.random() * 100 + '%';
+    petal.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
+    petal.style.animationDuration = (10 + Math.random() * 12) + 's';
+    petal.style.animationDelay = (Math.random() * 15) + 's';
+    petalsBg.appendChild(petal);
+  }
+
+  // ============================================================
   // ПЛАВАЮЩИЕ СЕРДЕЧКИ
   // ============================================================
   const heartsContainer = document.getElementById('floatingHearts');
@@ -81,6 +99,36 @@
     localStorage.setItem(STORAGE_THEME, newTheme);
   });
 
+  // ============================================================
+  // СЧЁТЧИК ВИЗИТОВ
+  // ============================================================
+  const visitCounterEl = document.getElementById('visitCounter');
+  const STORAGE_VISITS = 'nicole-visits';
+
+  function updateVisits() {
+    let visits = parseInt(localStorage.getItem(STORAGE_VISITS) || '0', 10);
+    visits++;
+    localStorage.setItem(STORAGE_VISITS, String(visits));
+
+    if (visitCounterEl) {
+      if (visits === 1) {
+        visitCounterEl.textContent = 'Ты открываешь эту страницу впервые ✨';
+      } else {
+        const plural = (n) => {
+          const mod10 = n % 10;
+          const mod100 = n % 100;
+          if (mod10 === 1 && mod100 !== 11) return 'раз';
+          if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return 'раза';
+          return 'раз';
+        };
+        visitCounterEl.textContent = `Ты открываешь эту страницу уже ${visits} ${plural(visits)} 💜`;
+      }
+    }
+  }
+
+  // ============================================================
+  // КОНФЕТТИ
+  // ============================================================
   function welcomeConfetti() {
     const chars = ['💜', '💖', '💗', '♥', '✨', '🌸', '💛', '🎉', '⭐', '🌟'];
     for (let i = 0; i < 80; i++) {
@@ -101,6 +149,8 @@
     lockScreen.classList.add('unlocked');
     document.body.classList.remove('locked');
     document.body.classList.add('unlocked');
+
+    updateVisits();
 
     setTimeout(() => {
       lockScreen.style.display = 'none';
@@ -434,7 +484,9 @@
   updateCounter();
   setInterval(updateCounter, 1000);
 
+  // ============================================================
   // ГАЛЕРЕЯ
+  // ============================================================
   const galleryGrid = document.getElementById('galleryGrid');
   galleryData.forEach((item, i) => {
     const div = document.createElement('div');
@@ -448,7 +500,9 @@
     galleryGrid.appendChild(div);
   });
 
+  // ============================================================
   // ТАЙМЛАЙН
+  // ============================================================
   const timelineContainer = document.getElementById('timelineContainer');
   timelineData.forEach(item => {
     const div = document.createElement('div');
@@ -462,7 +516,9 @@
     timelineContainer.appendChild(div);
   });
 
+  // ============================================================
   // ЗА ЧТО Я ЛЮБЛЮ
+  // ============================================================
   const reasonsGrid = document.getElementById('reasonsGrid');
   reasonsData.forEach((r, i) => {
     const div = document.createElement('div');
@@ -476,7 +532,9 @@
     reasonsGrid.appendChild(div);
   });
 
+  // ============================================================
   // 10 МОМЕНТОВ
+  // ============================================================
   const tenMomentsList = document.getElementById('tenMomentsList');
   tenMomentsData.forEach((m, i) => {
     const div = document.createElement('div');
@@ -491,7 +549,9 @@
     tenMomentsList.appendChild(div);
   });
 
+  // ============================================================
   // СТИХОТВОРЕНИЕ
+  // ============================================================
   const poemLinesContainer = document.getElementById('poemLines');
   poemLinesData.forEach((line) => {
     const p = document.createElement('p');
@@ -500,7 +560,9 @@
     poemLinesContainer.appendChild(p);
   });
 
+  // ============================================================
   // КОМПЛИМЕНТ
+  // ============================================================
   const complimentText = document.getElementById('complimentText');
   const complimentBtn = document.getElementById('complimentBtn');
   const complimentCounter = document.getElementById('complimentCounter');
@@ -524,7 +586,9 @@
     }, 400);
   });
 
+  // ============================================================
   // ИГРА "ПОЙМАЙ СЕРДЕЧКО"
+  // ============================================================
   const gameArea = document.getElementById('gameArea');
   const gameScoreEl = document.getElementById('gameScore');
   const gameTimeEl = document.getElementById('gameTime');
@@ -624,7 +688,9 @@
 
   gameStartBtn.addEventListener('click', startGame);
 
+  // ============================================================
   // LIGHTBOX
+  // ============================================================
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxClose = document.getElementById('lightboxClose');
@@ -691,7 +757,9 @@
     }
   }, { passive: true });
 
-  // СЮРПРИЗ
+  // ============================================================
+  // КНОПКА-СЮРПРИЗ
+  // ============================================================
   const surpriseBtn = document.getElementById('surpriseBtn');
   const surpriseModal = document.getElementById('surpriseModal');
   const surpriseText = document.getElementById('surpriseText');
@@ -713,7 +781,9 @@
     if (e.key === 'Escape') surpriseModal.classList.remove('active');
   });
 
+  // ============================================================
   // АУДИОПЛЕЕР
+  // ============================================================
   const audio = document.getElementById('bgAudio');
   const playPauseBtn = document.getElementById('playPauseBtn');
   const volumeSlider = document.getElementById('volumeSlider');
@@ -769,7 +839,9 @@
     loopBtn.style.opacity = isLooping ? '1' : '0.4';
   });
 
+  // ============================================================
   // НАВИГАЦИЯ + ПРОГРЕСС
+  // ============================================================
   const backToTop = document.getElementById('backToTop');
   const navBar = document.getElementById('navBar');
   const readingProgress = document.getElementById('readingProgress');
@@ -802,7 +874,9 @@
     });
   });
 
+  // ============================================================
   // INTERSECTION OBSERVER
+  // ============================================================
   const revealElements = document.querySelectorAll('.reveal');
   const poemLineElements = document.querySelectorAll('.poem-line');
   const reasonCards = document.querySelectorAll('.reason-card');
@@ -871,7 +945,9 @@
     timelineObserver.observe(item);
   });
 
+  // ============================================================
   // ПИСЬМО + ЧЕРНИЛА
+  // ============================================================
   const letterTextEl = document.getElementById('letterText');
   const letterPaper = document.getElementById('letterPaper');
   let letterIndex = 0;
@@ -907,7 +983,9 @@
     }
   }
 
+  // ============================================================
   // СЕКРЕТНАЯ ВКЛАДКА
+  // ============================================================
   const secretTrigger = document.getElementById('secretTrigger');
   const secretContent = document.getElementById('secretContent');
   const secretTextEl = document.getElementById('secretText');
@@ -942,7 +1020,9 @@
     setTimeout(typeSecret, 400);
   });
 
+  // ============================================================
   // ПИСЬМО В БУДУЩЕЕ
+  // ============================================================
   const FUTURE_OPEN_DATE = new Date(2027, 1, 4, 0, 0, 0);
   const SECRET_CODE = 'МирБулок';
 
@@ -1099,6 +1179,204 @@
   updateFutureCountdown();
   setInterval(updateFutureCountdown, 1000);
 
+  // ============================================================
+  // НАША СОВМЕСТИМОСТЬ
+  // ============================================================
+  const compatBtn = document.getElementById('compatBtn');
+  const compatResult = document.getElementById('compatResult');
+  const compatFill = document.getElementById('compatFill');
+  const compatPercent = document.getElementById('compatPercent');
+  const compatText = document.getElementById('compatText');
+
+  const compatMessages = [
+    'Идеальная пара. Даже звёзды завидуют 💫',
+    'Вы созданы друг для друга. Это видно с первого взгляда ✨',
+    '99.9% — а 0.1% оставим для сюрпризов 💜',
+    'Такая редкость — один на миллион. Берегите друг друга 🌟',
+    'Ваша любовь сильнее всех формул и алгоритмов 💖'
+  ];
+
+  if (compatBtn) {
+    compatBtn.addEventListener('click', () => {
+      compatBtn.disabled = true;
+      compatBtn.textContent = '💜 Вычисляю...';
+      compatResult.classList.remove('visible');
+
+      setTimeout(() => {
+        const percent = 99.9;
+        compatPercent.textContent = '0%';
+        compatFill.style.strokeDashoffset = '327';
+
+        compatResult.classList.add('visible');
+
+        setTimeout(() => {
+          const circumference = 2 * Math.PI * 52;
+          const offset = circumference * (1 - percent / 100);
+          compatFill.style.strokeDashoffset = offset;
+
+          let current = 0;
+          const step = percent / 40;
+          const timer = setInterval(() => {
+            current += step;
+            if (current >= percent) {
+              current = percent;
+              clearInterval(timer);
+            }
+            compatPercent.textContent = current.toFixed(1) + '%';
+          }, 30);
+        }, 200);
+
+        const msg = compatMessages[Math.floor(Math.random() * compatMessages.length)];
+        setTimeout(() => {
+          compatText.textContent = msg;
+        }, 1500);
+
+        setTimeout(() => {
+          compatBtn.disabled = false;
+          compatBtn.textContent = '💜 Проверить снова 💜';
+        }, 2500);
+      }, 800);
+    });
+  }
+
+  // ============================================================
+  // НАША ПОГОДА
+  // ============================================================
+  const weatherIcon = document.getElementById('weatherIcon');
+  const weatherTitle = document.getElementById('weatherTitle');
+  const weatherText = document.getElementById('weatherText');
+  const weatherRefresh = document.getElementById('weatherRefresh');
+
+  const weatherData = [
+    { icon: '☀️', title: 'Солнечно', text: 'Наша погода сегодня — самая тёплая, потому что ты рядом.' },
+    { icon: '🌤️', title: 'Ясно', text: 'Небо чистое, как мои мысли о тебе. Ни облачка, ни сомнений.' },
+    { icon: '🌈', title: 'Радужно', text: 'После любого дождя появляется радуга. Так и ты — после любого дня со мной.' },
+    { icon: '💜', title: 'Фиолетовые облака', text: 'Немного таинственно и очень красиво. Как ты.' },
+    { icon: '🌸', title: 'Цветочный ветер', text: 'Лёгкий ветерок приносит запах весны. Это ты.' },
+    { icon: '✨', title: 'Звёздная ночь', text: 'Ты — моя самая яркая звезда на этом небе.' },
+    { icon: '🌙', title: 'Лунная ночь', text: 'Спокойно, тихо и загадочно. Как наши разговоры допоздна.' },
+    { icon: '🎆', title: 'Праздник', text: 'Каждый день с тобой — как маленький праздник. Салют в честь нас.' },
+    { icon: '💖', title: 'Тёплое сердце', text: 'Погода внутри меня — всегда весна, когда я думаю о тебе.' },
+    { icon: '🌊', title: 'Морской бриз', text: 'Свежо, спокойно и бесконечно. Как мои чувства к тебе.' },
+    { icon: '🍃', title: 'Легко и нежно', text: 'Ничто не тревожит. Просто хорошо. Просто мы.' },
+    { icon: '⭐', title: 'Звёздопад', text: 'Сегодня ночью падают звёзды. Загадай желание — я помогу его исполнить.' }
+  ];
+
+  let lastWeatherIndex = -1;
+
+  function changeWeather() {
+    let idx;
+    do {
+      idx = Math.floor(Math.random() * weatherData.length);
+    } while (idx === lastWeatherIndex && weatherData.length > 1);
+    lastWeatherIndex = idx;
+
+    const w = weatherData[idx];
+
+    weatherIcon.style.transform = 'scale(0) rotate(-180deg)';
+    weatherTitle.style.opacity = '0';
+    weatherText.style.opacity = '0';
+
+    setTimeout(() => {
+      weatherIcon.textContent = w.icon;
+      weatherTitle.textContent = w.title;
+      weatherText.textContent = w.text;
+      weatherIcon.style.transform = 'scale(1) rotate(0deg)';
+      weatherTitle.style.opacity = '1';
+      weatherText.style.opacity = '1';
+    }, 300);
+  }
+
+  if (weatherRefresh) {
+    weatherRefresh.addEventListener('click', changeWeather);
+  }
+
+  // ============================================================
+  // EASTER EGG
+  // ============================================================
+  const easterModal = document.getElementById('easterModal');
+  const easterClose = document.getElementById('easterClose');
+  const heroTitleForEgg = document.getElementById('heroTitle');
+
+  let clickCount = 0;
+  let easterShown = false;
+
+  function showEasterEgg() {
+    if (easterShown) return;
+    easterShown = true;
+    easterModal.classList.add('active');
+
+    const chars = ['🎉', '✨', '💜', '🌟', '🎊', '💖', '⭐', '💫'];
+    for (let i = 0; i < 60; i++) {
+      const span = document.createElement('span');
+      span.className = 'confetti-heart';
+      span.textContent = chars[Math.floor(Math.random() * chars.length)];
+      span.style.left = Math.random() * 100 + 'vw';
+      span.style.fontSize = (1.3 + Math.random() * 1.5) + 'rem';
+      span.style.animationDuration = (3 + Math.random() * 3) + 's';
+      span.style.animationDelay = (Math.random() * 1.5) + 's';
+      document.body.appendChild(span);
+      setTimeout(() => span.remove(), 8000);
+    }
+  }
+
+  // Способ 1: 5 кликов по заголовку
+  if (heroTitleForEgg) {
+    heroTitleForEgg.addEventListener('click', () => {
+      clickCount++;
+      if (clickCount >= 5) {
+        showEasterEgg();
+        clickCount = 0;
+      }
+      if (clickCount >= 3) {
+        heroTitleForEgg.style.cursor = 'pointer';
+      }
+    });
+  }
+
+  // Способ 2: ввод слова "ЛЮБОВЬ"
+  let typedBuffer = '';
+  const EASTER_WORD = 'любовь';
+
+  document.addEventListener('keydown', (e) => {
+    if (easterShown) return;
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+    if (e.key.length === 1) {
+      typedBuffer += e.key.toLowerCase();
+      if (typedBuffer.length > EASTER_WORD.length) {
+        typedBuffer = typedBuffer.slice(-EASTER_WORD.length);
+      }
+      if (typedBuffer === EASTER_WORD) {
+        showEasterEgg();
+        typedBuffer = '';
+      }
+    }
+  });
+
+  if (easterClose) {
+    easterClose.addEventListener('click', () => {
+      easterModal.classList.remove('active');
+    });
+  }
+
+  if (easterModal) {
+    easterModal.addEventListener('click', (e) => {
+      if (e.target === easterModal) {
+        easterModal.classList.remove('active');
+      }
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && easterModal && easterModal.classList.contains('active')) {
+      easterModal.classList.remove('active');
+    }
+  });
+
+  // ============================================================
+  // ФУТЕР + ЗАПУСК
+  // ============================================================
   document.getElementById('footerYear').textContent = new Date().getFullYear();
 
   window.addEventListener('load', () => {

@@ -22,6 +22,7 @@
 
   <div class="starfield" id="starfield" aria-hidden="true"></div>
   <div class="floating-hearts" id="floatingHearts" aria-hidden="true"></div>
+  <div class="petals-bg" id="petalsBg" aria-hidden="true"></div>
   <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
 
   <!-- ЭКРАН БЛОКИРОВКИ -->
@@ -60,6 +61,9 @@
     <button data-goto="timeline">Путь</button>
     <button data-goto="moments">Моменты</button>
     <button data-goto="reasons">Почему</button>
+    <button data-goto="nicknames">Прозвища</button>
+    <button data-goto="compatibility">Совместимость</button>
+    <button data-goto="weather">Погода</button>
     <button data-goto="tenMoments">10 раз</button>
     <button data-goto="poemSection">Чувства</button>
     <button data-goto="compliment">Комплимент</button>
@@ -67,7 +71,6 @@
     <button data-goto="letterSection">Письмо</button>
     <button data-goto="secretSection">Секрет</button>
     <button data-goto="futureLetter">Будущее</button>
-    <a href="winter.html" class="winter-nav-link">❄️ Зима</a>
   </nav>
 
   <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">🌙</button>
@@ -88,6 +91,8 @@
         <div class="counter-block"><span class="counter-num" id="cMinutes">0</span><span class="counter-label">Минут</span></div>
         <div class="counter-block"><span class="counter-num" id="cSeconds">0</span><span class="counter-label">Секунд</span></div>
       </div>
+
+      <p class="visit-counter" id="visitCounter">Ты открываешь эту страницу впервые ✨</p>
 
       <div class="scroll-hint" aria-hidden="true">↓ листайте ↓</div>
     </header>
@@ -119,6 +124,86 @@
     <section class="reveal" id="reasons">
       <h2 class="section-title">За что я тебя люблю</h2>
       <div class="reasons-grid" id="reasonsGrid"></div>
+    </section>
+
+    <!-- НАШИ ПРОЗВИЩА -->
+    <section class="reveal" id="nicknames">
+      <h2 class="section-title">Наши прозвища</h2>
+      <div class="nicknames-grid">
+        <div class="nickname-card hers">
+          <div class="nickname-header">
+            <span class="nickname-icon">🐯</span>
+            <h3 class="nickname-owner">Как я называю тебя</h3>
+          </div>
+          <div class="nickname-list">
+            <div class="nickname-item">
+              <span class="nickname-emoji">🐯</span>
+              <span class="nickname-text">Тигрица</span>
+              <span class="nickname-desc">Когда ты злишься — но всё равно самая красивая</span>
+            </div>
+            <div class="nickname-item">
+              <span class="nickname-emoji">🥐</span>
+              <span class="nickname-text">Булочка</span>
+              <span class="nickname-desc">Мягкая, тёплая и сладкая</span>
+            </div>
+            <div class="nickname-item">
+              <span class="nickname-emoji">🌸</span>
+              <span class="nickname-text">Малышка</span>
+              <span class="nickname-desc">Самая нежная на свете</span>
+            </div>
+          </div>
+        </div>
+        <div class="nickname-card mine">
+          <div class="nickname-header">
+            <span class="nickname-icon">🥯</span>
+            <h3 class="nickname-owner">Как ты называешь меня</h3>
+          </div>
+          <div class="nickname-list">
+            <div class="nickname-item">
+              <span class="nickname-emoji">🥯</span>
+              <span class="nickname-text">Моё бублик</span>
+              <span class="nickname-desc">Твоё личное, только для нас двоих</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- НАША СОВМЕСТИМОСТЬ -->
+    <section class="reveal" id="compatibility">
+      <h2 class="section-title">Наша совместимость</h2>
+      <div class="compat-card">
+        <p class="compat-subtitle">Нажми, чтобы узнать, насколько мы подходим друг другу ✨</p>
+        <button class="compat-btn" id="compatBtn">💜 Проверить совместимость 💜</button>
+        <div class="compat-result" id="compatResult">
+          <div class="compat-circle">
+            <svg viewBox="0 0 120 120" class="compat-svg">
+              <defs>
+                <linearGradient id="compatGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#AB47BC"/>
+                  <stop offset="50%" stop-color="#FF6B9D"/>
+                  <stop offset="100%" stop-color="#FFB74D"/>
+                </linearGradient>
+              </defs>
+              <circle cx="60" cy="60" r="52" class="compat-track"></circle>
+              <circle cx="60" cy="60" r="52" class="compat-fill" id="compatFill"></circle>
+            </svg>
+            <span class="compat-percent" id="compatPercent">0%</span>
+          </div>
+          <p class="compat-text" id="compatText"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- НАША ПОГОДА -->
+    <section class="reveal" id="weather">
+      <h2 class="section-title">Наша погода</h2>
+      <div class="weather-card" id="weatherCard">
+        <div class="weather-icon" id="weatherIcon">☀️</div>
+        <div class="weather-title" id="weatherTitle">Солнечно</div>
+        <div class="weather-text" id="weatherText">Наша погода сегодня — самая тёплая, потому что ты рядом.</div>
+        <button class="weather-refresh" id="weatherRefresh">🔄 Сменить погоду</button>
+      </div>
     </section>
 
     <section class="reveal" id="tenMoments">
@@ -241,15 +326,6 @@
       </div>
     </section>
 
-    <!-- ЗИМНИЙ ПОДАРОК -->
-    <section class="reveal" id="winterSurprise" style="text-align: center; margin: 4rem auto; max-width: 800px;">
-      <h2 class="section-title">Зимний подарок ❄️</h2>
-      <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--text-accent); margin-bottom: 2rem; line-height: 1.6;">
-        У меня есть для тебя зимнее поздравление. Но оно под паролем — как настоящий подарок 🎁
-      </p>
-      <a href="winter.html" class="winter-link-btn">❄️ Открыть зимний подарок →</a>
-    </section>
-
     <footer>
       <span class="heart-icon">♥</span> Сделано с любовью для Николь <span class="heart-icon">♥</span><br>
       <span id="footerYear"></span>
@@ -273,6 +349,20 @@
       <span class="surprise-emoji" id="surpriseEmoji">💜</span>
       <p class="surprise-text" id="surpriseText"></p>
       <button class="surprise-close" id="surpriseClose">Спасибо ♥</button>
+    </div>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО EASTER EGG -->
+  <div class="easter-modal" id="easterModal" role="dialog" aria-modal="true">
+    <div class="easter-card">
+      <span class="easter-emoji">🎉</span>
+      <h3 class="easter-title">Ты нашла секрет!</h3>
+      <p class="easter-text">
+        Ты самая внимательная девушка на свете. Я знал, что ты найдёшь это место 💜
+        <br><br>
+        Я люблю тебя больше, чем все звёзды на небе. Спасибо, что ты есть.
+      </p>
+      <button class="easter-close" id="easterClose">Люблю тебя ♥</button>
     </div>
   </div>
 
