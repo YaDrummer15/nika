@@ -2,11 +2,18 @@
   'use strict';
 
   // ============================================================
-  // ЗВЁЗДНОЕ НЕБО
+  // ОПРЕДЕЛЕНИЕ МОЩНОСТИ УСТРОЙСТВА
+  // ============================================================
+  const isMobile = window.innerWidth < 768;
+  const isLowEnd = isMobile || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
+
+  // ============================================================
+  // ЗВЁЗДНОЕ НЕБО (меньше звёзд на мобилке)
   // ============================================================
   const starfield = document.getElementById('starfield');
-  const STAR_COUNT = 120;
+  const STAR_COUNT = isLowEnd ? 40 : 90;
 
+  const starFragment = document.createDocumentFragment();
   for (let i = 0; i < STAR_COUNT; i++) {
     const star = document.createElement('div');
     star.className = 'star';
@@ -18,16 +25,18 @@
     star.style.animationDuration = (2 + Math.random() * 4) + 's';
     star.style.animationDelay = (Math.random() * 5) + 's';
     star.style.opacity = 0.3 + Math.random() * 0.7;
-    starfield.appendChild(star);
+    starFragment.appendChild(star);
   }
+  starfield.appendChild(starFragment);
 
   // ============================================================
   // ЦВЕТОЧНЫЙ ФОН
   // ============================================================
   const petalsBg = document.getElementById('petalsBg');
   const petalChars = ['🌸', '🌺', '🌷', '🌹', '💐', '🌼', '💮'];
-  const PETAL_COUNT = window.innerWidth < 600 ? 8 : 18;
+  const PETAL_COUNT = isLowEnd ? 5 : 12;
 
+  const petalFragment = document.createDocumentFragment();
   for (let i = 0; i < PETAL_COUNT; i++) {
     const petal = document.createElement('span');
     petal.className = 'petal';
@@ -36,16 +45,18 @@
     petal.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
     petal.style.animationDuration = (10 + Math.random() * 12) + 's';
     petal.style.animationDelay = (Math.random() * 15) + 's';
-    petalsBg.appendChild(petal);
+    petalFragment.appendChild(petal);
   }
+  petalsBg.appendChild(petalFragment);
 
   // ============================================================
   // ПЛАВАЮЩИЕ СЕРДЕЧКИ
   // ============================================================
   const heartsContainer = document.getElementById('floatingHearts');
   const heartChars = ['♥', '❤', '💜', '💖', '💗'];
-  const heartCount = window.innerWidth < 600 ? 8 : 16;
+  const heartCount = isLowEnd ? 5 : 12;
 
+  const heartFragment = document.createDocumentFragment();
   for (let i = 0; i < heartCount; i++) {
     const span = document.createElement('span');
     span.className = 'heart-float';
@@ -55,11 +66,12 @@
     span.style.animationDuration = (12 + Math.random() * 18) + 's';
     span.style.animationDelay = (Math.random() * 15) + 's';
     span.style.color = ['#AB47BC', '#CE93D8', '#8E24AA', '#FFB74D'][Math.floor(Math.random() * 4)];
-    heartsContainer.appendChild(span);
+    heartFragment.appendChild(span);
   }
+  heartsContainer.appendChild(heartFragment);
 
   // ============================================================
-  // ПЕРЕМЕННЫЕ
+  // КОНСТАНТЫ
   // ============================================================
   const CORRECT_PASSWORD = 'Бублик';
   const STORAGE_UNLOCKED = 'nicole-unlocked';
@@ -72,110 +84,96 @@
   const startDate = new Date(2026, 1, 4, 0, 0, 0);
 
   // ============================================================
-  // ССЫЛКИ НА ЭЛЕМЕНТЫ
+  // ССЫЛКИ
   // ============================================================
-  const lockScreen = document.getElementById('lockScreen');
-  const lockForm = document.getElementById('lockForm');
-  const lockInput = document.getElementById('lockInput');
-  const lockError = document.getElementById('lockError');
-  const lockIcon = document.getElementById('lockIcon');
-  const themeToggle = document.getElementById('themeToggle');
-  const lockThemeToggle = document.getElementById('lockThemeToggle');
-
-  const loveIntro = document.getElementById('loveIntro');
-  const loveHeartsContainer = document.getElementById('loveHeartsContainer');
-  const loveSkipBtn = document.getElementById('loveSkipBtn');
-
-  const heroTitleEl = document.getElementById('heroTitle');
-  const heroDateEl = document.getElementById('heroDate');
-  const visitCounterEl = document.getElementById('visitCounter');
-
-  const galleryGrid = document.getElementById('galleryGrid');
-  const timelineContainer = document.getElementById('timelineContainer');
-  const reasonsGrid = document.getElementById('reasonsGrid');
-  const tenMomentsList = document.getElementById('tenMomentsList');
-  const poemLinesContainer = document.getElementById('poemLines');
-
-  const complimentText = document.getElementById('complimentText');
-  const complimentBtn = document.getElementById('complimentBtn');
-  const complimentCounter = document.getElementById('complimentCounter');
-
-  const gameArea = document.getElementById('gameArea');
-  const gameScoreEl = document.getElementById('gameScore');
-  const gameTimeEl = document.getElementById('gameTime');
-  const gameBestEl = document.getElementById('gameBest');
-  const gameStartBtn = document.getElementById('gameStartBtn');
-  const gameResult = document.getElementById('gameResult');
-
-  const letterTextEl = document.getElementById('letterText');
-  const letterPaper = document.getElementById('letterPaper');
-  const secretTrigger = document.getElementById('secretTrigger');
-  const secretContent = document.getElementById('secretContent');
-  const secretTextEl = document.getElementById('secretText');
-
-  const futureLetterBox = document.getElementById('futureLetterBox');
-  const futureLock = document.getElementById('futureLock');
-  const futureTitle = document.getElementById('futureTitle');
-  const futureOpenBtn = document.getElementById('futureOpenBtn');
-  const futureHint = document.getElementById('futureHint');
-  const futureSecretForm = document.getElementById('futureSecretForm');
-  const futureSecretInput = document.getElementById('futureSecretInput');
-  const futureSecretHint = document.getElementById('futureSecretHint');
-  const futureLetterText = document.getElementById('futureLetterText');
-  const fcDays = document.getElementById('fcDays');
-  const fcHours = document.getElementById('fcHours');
-  const fcMinutes = document.getElementById('fcMinutes');
-  const fcSeconds = document.getElementById('fcSeconds');
-
-  const surpriseBtn = document.getElementById('surpriseBtn');
-  const surpriseModal = document.getElementById('surpriseModal');
-  const surpriseEmoji = document.getElementById('surpriseEmoji');
-  const surpriseText = document.getElementById('surpriseText');
-  const surpriseClose = document.getElementById('surpriseClose');
-
-  const easterModal = document.getElementById('easterModal');
-  const easterClose = document.getElementById('easterClose');
-
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightboxImg');
-  const lightboxCaption = document.getElementById('lightboxCaption');
-  const lightboxClose = document.getElementById('lightboxClose');
-  const lightboxPrev = document.getElementById('lightboxPrev');
-  const lightboxNext = document.getElementById('lightboxNext');
-  const lightboxCounter = document.getElementById('lightboxCounter');
-
-  const bgAudio = document.getElementById('bgAudio');
-  const playPauseBtn = document.getElementById('playPauseBtn');
-  const volumeSlider = document.getElementById('volumeSlider');
-  const muteBtn = document.getElementById('muteBtn');
-  const loopBtn = document.getElementById('loopBtn');
-  const audioPlayer = document.getElementById('audioPlayer');
-
-  const navBar = document.getElementById('navBar');
-  const backToTop = document.getElementById('backToTop');
-  const readingProgress = document.getElementById('readingProgress');
-
-  const hundredGrid = document.getElementById('hundredGrid');
-  const hundredProgressBar = document.getElementById('hundredProgressBar');
-  const hundredProgressText = document.getElementById('hundredProgressText');
-  const hundredProgressLevel = document.getElementById('hundredProgressLevel');
-  const hundredProgressRemaining = document.getElementById('hundredProgressRemaining');
-  const hundredRandom = document.getElementById('hundredRandom');
-  const hundredShowAll = document.getElementById('hundredShowAll');
-
-  const compatBtn = document.getElementById('compatBtn');
-  const compatResult = document.getElementById('compatResult');
-  const compatFill = document.getElementById('compatFill');
-  const compatPercent = document.getElementById('compatPercent');
-  const compatText = document.getElementById('compatText');
-
-  const weatherIcon = document.getElementById('weatherIcon');
-  const weatherTitle = document.getElementById('weatherTitle');
-  const weatherText = document.getElementById('weatherText');
-  const weatherRefresh = document.getElementById('weatherRefresh');
+  const $ = (id) => document.getElementById(id);
+  const lockScreen = $('lockScreen');
+  const lockForm = $('lockForm');
+  const lockInput = $('lockInput');
+  const lockError = $('lockError');
+  const lockIcon = $('lockIcon');
+  const themeToggle = $('themeToggle');
+  const lockThemeToggle = $('lockThemeToggle');
+  const loveIntro = $('loveIntro');
+  const loveHeartsContainer = $('loveHeartsContainer');
+  const loveSkipBtn = $('loveSkipBtn');
+  const heroTitleEl = $('heroTitle');
+  const heroDateEl = $('heroDate');
+  const visitCounterEl = $('visitCounter');
+  const galleryGrid = $('galleryGrid');
+  const timelineContainer = $('timelineContainer');
+  const reasonsGrid = $('reasonsGrid');
+  const tenMomentsList = $('tenMomentsList');
+  const poemLinesContainer = $('poemLines');
+  const complimentText = $('complimentText');
+  const complimentBtn = $('complimentBtn');
+  const complimentCounter = $('complimentCounter');
+  const gameArea = $('gameArea');
+  const gameScoreEl = $('gameScore');
+  const gameTimeEl = $('gameTime');
+  const gameBestEl = $('gameBest');
+  const gameStartBtn = $('gameStartBtn');
+  const gameResult = $('gameResult');
+  const letterTextEl = $('letterText');
+  const letterPaper = $('letterPaper');
+  const secretTrigger = $('secretTrigger');
+  const secretContent = $('secretContent');
+  const secretTextEl = $('secretText');
+  const futureLetterBox = $('futureLetterBox');
+  const futureLock = $('futureLock');
+  const futureTitle = $('futureTitle');
+  const futureOpenBtn = $('futureOpenBtn');
+  const futureHint = $('futureHint');
+  const futureSecretForm = $('futureSecretForm');
+  const futureSecretInput = $('futureSecretInput');
+  const futureSecretHint = $('futureSecretHint');
+  const futureLetterText = $('futureLetterText');
+  const fcDays = $('fcDays');
+  const fcHours = $('fcHours');
+  const fcMinutes = $('fcMinutes');
+  const fcSeconds = $('fcSeconds');
+  const surpriseBtn = $('surpriseBtn');
+  const surpriseModal = $('surpriseModal');
+  const surpriseEmoji = $('surpriseEmoji');
+  const surpriseText = $('surpriseText');
+  const surpriseClose = $('surpriseClose');
+  const easterModal = $('easterModal');
+  const easterClose = $('easterClose');
+  const lightbox = $('lightbox');
+  const lightboxImg = $('lightboxImg');
+  const lightboxCaption = $('lightboxCaption');
+  const lightboxClose = $('lightboxClose');
+  const lightboxPrev = $('lightboxPrev');
+  const lightboxNext = $('lightboxNext');
+  const lightboxCounter = $('lightboxCounter');
+  const bgAudio = $('bgAudio');
+  const playPauseBtn = $('playPauseBtn');
+  const volumeSlider = $('volumeSlider');
+  const muteBtn = $('muteBtn');
+  const loopBtn = $('loopBtn');
+  const audioPlayer = $('audioPlayer');
+  const navBar = $('navBar');
+  const backToTop = $('backToTop');
+  const readingProgress = $('readingProgress');
+  const hundredGrid = $('hundredGrid');
+  const hundredProgressBar = $('hundredProgressBar');
+  const hundredProgressText = $('hundredProgressText');
+  const hundredProgressLevel = $('hundredProgressLevel');
+  const hundredProgressRemaining = $('hundredProgressRemaining');
+  const hundredRandom = $('hundredRandom');
+  const hundredShowAll = $('hundredShowAll');
+  const compatBtn = $('compatBtn');
+  const compatResult = $('compatResult');
+  const compatFill = $('compatFill');
+  const compatPercent = $('compatPercent');
+  const compatText = $('compatText');
+  const weatherIcon = $('weatherIcon');
+  const weatherTitle = $('weatherTitle');
+  const weatherText = $('weatherText');
+  const weatherRefresh = $('weatherRefresh');
 
   // ============================================================
-  // ПОПАП ПРИЧИНЫ — СОЗДАЁМ СРАЗУ
+  // ПОПАП ПРИЧИНЫ
   // ============================================================
   const reasonPopup = document.createElement('div');
   reasonPopup.className = 'reason-popup';
@@ -189,7 +187,7 @@
   `;
   document.body.appendChild(reasonPopup);
 
-  const reasonPopupClose = document.getElementById('reasonPopupClose');
+  const reasonPopupClose = $('reasonPopupClose');
   const reasonPopupNum = reasonPopup.querySelector('.reason-popup-num');
   const reasonPopupText = reasonPopup.querySelector('.reason-popup-text');
   const reasonPopupBadge = reasonPopup.querySelector('.secret-popup-badge');
@@ -206,7 +204,6 @@
   function showReasonPopup(num, text, isSecret) {
     reasonPopupNum.textContent = `Причина №${num}`;
     reasonPopupText.textContent = text;
-
     if (isSecret) {
       reasonPopupBadge.style.display = 'inline-block';
       reasonPopup.classList.add('secret');
@@ -214,9 +211,7 @@
       reasonPopupBadge.style.display = 'none';
       reasonPopup.classList.remove('secret');
     }
-
     reasonPopup.classList.add('visible');
-
     clearTimeout(reasonPopupTimer);
     reasonPopupTimer = setTimeout(() => {
       reasonPopup.classList.remove('visible');
@@ -240,24 +235,16 @@
     applyTheme('dark');
   }
 
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      const newTheme = document.body.classList.contains('dark') ? 'light' : 'dark';
-      applyTheme(newTheme);
-      localStorage.setItem(STORAGE_THEME, newTheme);
-    });
-  }
-
-  if (lockThemeToggle) {
-    lockThemeToggle.addEventListener('click', () => {
-      const newTheme = document.body.classList.contains('dark') ? 'light' : 'dark';
-      applyTheme(newTheme);
-      localStorage.setItem(STORAGE_THEME, newTheme);
-    });
-  }
+  const toggleTheme = () => {
+    const newTheme = document.body.classList.contains('dark') ? 'light' : 'dark';
+    applyTheme(newTheme);
+    localStorage.setItem(STORAGE_THEME, newTheme);
+  };
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+  if (lockThemeToggle) lockThemeToggle.addEventListener('click', toggleTheme);
 
   // ============================================================
-  // СЧЁТЧИК ВИЗИТОВ
+  // ВИЗИТЫ
   // ============================================================
   function updateVisits() {
     let visits = parseInt(localStorage.getItem(STORAGE_VISITS) || '0', 10);
@@ -281,11 +268,15 @@
   }
 
   // ============================================================
-  // КОНФЕТТИ
+  // КОНФЕТТИ (меньше частиц + reuse через DocumentFragment)
   // ============================================================
   function welcomeConfetti() {
+    if (isLowEnd) return; // не запускаем на слабых устройствах
     const chars = ['💜', '💖', '💗', '♥', '✨', '🌸', '💛', '🎉', '⭐', '🌟'];
-    for (let i = 0; i < 80; i++) {
+    const fragment = document.createDocumentFragment();
+    const count = 40;
+
+    for (let i = 0; i < count; i++) {
       const span = document.createElement('span');
       span.className = 'welcome-confetti';
       span.textContent = chars[Math.floor(Math.random() * chars.length)];
@@ -293,29 +284,25 @@
       span.style.fontSize = (1.2 + Math.random() * 1.8) + 'rem';
       span.style.animationDuration = (3 + Math.random() * 3) + 's';
       span.style.animationDelay = (Math.random() * 1.2) + 's';
-      document.body.appendChild(span);
-      setTimeout(() => span.remove(), 7000);
+      fragment.appendChild(span);
     }
+    document.body.appendChild(fragment);
+    setTimeout(() => {
+      document.querySelectorAll('.welcome-confetti').forEach(el => el.remove());
+    }, 7000);
   }
 
   // ============================================================
-  // ЭКРАН БЛОКИРОВКИ
+  // БЛОКИРОВКА
   // ============================================================
   function unlockSite() {
     lockIcon.textContent = '🔓';
     lockScreen.classList.add('unlocked');
     document.body.classList.remove('locked');
     document.body.classList.add('unlocked');
-
     updateVisits();
-
-    setTimeout(() => {
-      lockScreen.style.display = 'none';
-    }, 1000);
-
-    setTimeout(() => {
-      showLoveIntro();
-    }, 1200);
+    setTimeout(() => { lockScreen.style.display = 'none'; }, 1000);
+    setTimeout(() => { showLoveIntro(); }, 1200);
   }
 
   if (sessionStorage.getItem(STORAGE_UNLOCKED) === 'true') {
@@ -327,7 +314,6 @@
   lockForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const value = lockInput.value.trim();
-
     if (value.toLowerCase() === CORRECT_PASSWORD.toLowerCase()) {
       sessionStorage.setItem(STORAGE_UNLOCKED, 'true');
       lockError.classList.remove('visible');
@@ -345,36 +331,15 @@
   setTimeout(() => lockInput.focus(), 600);
 
   // ============================================================
-  // АНИМАЦИЯ "I LOVE YOU"
+  // "I LOVE YOU"
   // ============================================================
-  const letterI = [
-    [1,1,1,1,1],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],
-    [0,0,1,0,0],[0,0,1,0,0],[1,1,1,1,1]
-  ];
-  const letterL = [
-    [1,0,0,0,0],[1,0,0,0,0],[1,0,0,0,0],[1,0,0,0,0],
-    [1,0,0,0,0],[1,0,0,0,0],[1,1,1,1,1]
-  ];
-  const letterO = [
-    [0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],
-    [1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]
-  ];
-  const letterV = [
-    [1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],
-    [0,1,0,1,0],[0,1,0,1,0],[0,0,1,0,0]
-  ];
-  const letterE = [
-    [1,1,1,1,1],[1,0,0,0,0],[1,0,0,0,0],[1,1,1,1,0],
-    [1,0,0,0,0],[1,0,0,0,0],[1,1,1,1,1]
-  ];
-  const letterY = [
-    [1,0,0,0,1],[1,0,0,0,1],[0,1,0,1,0],[0,1,0,1,0],
-    [0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0]
-  ];
-  const letterU = [
-    [1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],
-    [1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]
-  ];
+  const letterI = [[1,1,1,1,1],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[1,1,1,1,1]];
+  const letterL = [[1,0,0,0,0],[1,0,0,0,0],[1,0,0,0,0],[1,0,0,0,0],[1,0,0,0,0],[1,0,0,0,0],[1,1,1,1,1]];
+  const letterO = [[0,1,1,1,0],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]];
+  const letterV = [[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,0,1,0],[0,1,0,1,0],[0,0,1,0,0]];
+  const letterE = [[1,1,1,1,1],[1,0,0,0,0],[1,0,0,0,0],[1,1,1,1,0],[1,0,0,0,0],[1,0,0,0,0],[1,1,1,1,1]];
+  const letterY = [[1,0,0,0,1],[1,0,0,0,1],[0,1,0,1,0],[0,1,0,1,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0]];
+  const letterU = [[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,1,1,0]];
 
   function combineLetters(...letters) {
     const result = [];
@@ -416,6 +381,7 @@
     const offsetY = containerHeight / 2 - (totalHeight * pixel) / 2;
     const heartSize = Math.max(0.6, pixel / 14);
 
+    const fragment = document.createDocumentFragment();
     let heartCount = 0;
     for (let col = 0; col < totalWidth; col++) {
       for (let row = 0; row < totalHeight; row++) {
@@ -426,12 +392,13 @@
           heart.style.left = (offsetX + col * pixel + pixel / 2) + 'px';
           heart.style.top = (offsetY + row * pixel + pixel / 2) + 'px';
           heart.style.fontSize = heartSize + 'rem';
-          heart.style.animationDelay = (heartCount * 0.02) + 's, ' + (2 + heartCount * 0.02) + 's';
-          loveHeartsContainer.appendChild(heart);
+          heart.style.animationDelay = (heartCount * 0.02) + 's';
+          fragment.appendChild(heart);
           heartCount++;
         }
       }
     }
+    loveHeartsContainer.appendChild(fragment);
 
     let loveText = loveIntro.querySelector('.love-text');
     if (loveText) loveText.remove();
@@ -443,7 +410,9 @@
 
   function buildBackgroundHearts() {
     loveIntro.querySelectorAll('.love-bg-heart').forEach(h => h.remove());
-    for (let i = 0; i < 20; i++) {
+    const fragment = document.createDocumentFragment();
+    const count = isLowEnd ? 8 : 15;
+    for (let i = 0; i < count; i++) {
       const heart = document.createElement('span');
       heart.className = 'love-bg-heart';
       heart.textContent = ['♥', '❤', '💜', '💖'][Math.floor(Math.random() * 4)];
@@ -451,8 +420,9 @@
       heart.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
       heart.style.animationDuration = (6 + Math.random() * 8) + 's';
       heart.style.animationDelay = (Math.random() * 5) + 's';
-      loveIntro.appendChild(heart);
+      fragment.appendChild(heart);
     }
+    loveIntro.appendChild(fragment);
   }
 
   function showLoveIntro() {
@@ -490,34 +460,34 @@
   ];
 
   const timelineData = [
-    { date: '04 февраля 2026', title: 'Первое сообщение', desc: 'Тот самый момент, когда всё началось. Одно короткое "привет", которое изменило всё.' },
+    { date: '04 февраля 2026', title: 'Первое сообщение', desc: 'Тот самый момент, когда всё началось.' },
     { date: '07 февраля 2026', title: 'Первая совместная фотография', desc: 'Мы впервые оказались в одном кадре. И этот кадр — теперь моя самая тёплая память.' },
-    { date: '22 февраля 2026', title: 'Наше любимое место', desc: 'Мы нашли "Мир Булок" — место, где время замирает, а разговоры становятся бесконечными.' },
-    { date: '23 февраля 2026', title: 'Просто вместе', desc: 'День, когда мы поняли, что нам не нужны особые поводы. Достаточно просто быть рядом.' },
+    { date: '22 февраля 2026', title: 'Наше любимое место', desc: 'Мы нашли "Мир Булок" — место, где время замирает.' },
+    { date: '23 февраля 2026', title: 'Просто вместе', desc: 'День, когда мы поняли, что нам не нужны особые поводы.' },
     { date: '04 марта 2026', title: 'Твой день рождения', desc: 'Я хотел подарить тебе весь мир, но ты сказала, что тебе достаточно меня.' },
-    { date: '08 марта 2026', title: 'Первое наше 8 марта', desc: 'Первый праздник, который я встречал с тобой. И я уже знал — так будет всегда.' }
+    { date: '08 марта 2026', title: 'Первое наше 8 марта', desc: 'Первый праздник, который я встречал с тобой.' }
   ];
 
   const reasonsData = [
-    { icon: '😊', title: 'Твоя улыбка', text: 'Она освещает даже самый хмурый день и заставляет моё сердце биться чаще.' },
-    { icon: '🎵', title: 'Твой голос', text: 'Музыка, которая лечит любые раны и успокаивает любые тревоги.' },
-    { icon: '💜', title: 'Твоя доброта', text: 'Ты заботишься обо всех вокруг, даже когда устала. Это бесценно.' },
-    { icon: '✨', title: 'Твои глаза', text: 'В них я вижу будущее, в котором мы счастливы. Каждый день.' },
-    { icon: '🌸', title: 'Твоя нежность', text: 'Каждое твоё прикосновение — как весенний ветерок. Тепло и легко.' },
-    { icon: '🌟', title: 'Твоя сила', text: 'Ты справляешься со всем, и я восхищаюсь тобой каждый день.' }
+    { icon: '😊', title: 'Твоя улыбка', text: 'Она освещает даже самый хмурый день.' },
+    { icon: '🎵', title: 'Твой голос', text: 'Музыка, которая лечит любые раны.' },
+    { icon: '💜', title: 'Твоя доброта', text: 'Ты заботишься обо всех вокруг, даже когда устала.' },
+    { icon: '✨', title: 'Твои глаза', text: 'В них я вижу будущее, в котором мы счастливы.' },
+    { icon: '🌸', title: 'Твоя нежность', text: 'Каждое твоё прикосновение — как весенний ветерок.' },
+    { icon: '🌟', title: 'Твоя сила', text: 'Ты справляешься со всем, и я восхищаюсь тобой.' }
   ];
 
   const tenMomentsData = [
-    { title: 'Тот самый "привет"', text: 'Когда ты ответила впервые, я перечитывал сообщение раз десять. С этого момента всё изменилось.' },
-    { title: 'Первая совместная фотография', text: 'Мы стояли рядом, и я боялся, что ты услышишь, как громко бьётся моё сердце. Оно билось только для тебя.' },
-    { title: 'Наш "Мир Булок"', text: 'Помнишь этот момент, когда мы сидели вдвоём, и весь мир исчез? Остались только ты, я и наши разговоры.' },
-    { title: 'Первая прогулка после поездки в Новый Херсонес', text: 'Как мы шли вместе, даже не представляя, что будет ждать нас в будущем.' },
-    { title: 'Твой смех', text: 'Однажды ты рассмеялась так искренне, что я понял — я готов слушать этот звук всю жизнь.' },
-    { title: 'Твоя забота', text: 'Когда ты спросила, поел ли я, будто это самое важное в мире. Мелочь, но она решила всё.' },
-    { title: 'Твой день рождения', text: 'Когда я впервые вручил тебе подарок, и ты так обрадовалась. Я хотел остановить этот момент навсегда.' },
-    { title: 'Наши встречи', text: 'Каждая встреча — как маленький праздник. И каждый раз я не хотел, чтобы она заканчивалась.' },
-    { title: 'Твоё "доброе утро"', text: 'Когда ты писала мне это утром, весь день становился светлее. Даже если на улице шёл дождь.' },
-    { title: 'Просто быть рядом', text: 'И самый главный момент — когда я понял, что мне не нужно ничего особенного. Просто быть с тобой.' }
+    { title: 'Тот самый "привет"', text: 'Когда ты ответила впервые, я перечитывал сообщение раз десять.' },
+    { title: 'Первая совместная фотография', text: 'Мы стояли рядом, и я боялся, что ты услышишь, как громко бьётся моё сердце.' },
+    { title: 'Наш "Мир Булок"', text: 'Помнишь этот момент, когда весь мир исчез? Остались только ты и я.' },
+    { title: 'Первая прогулка после Нового Херсонеса', text: 'Как мы шли вместе, не зная, что будет впереди.' },
+    { title: 'Твой смех', text: 'Однажды ты рассмеялась так искренне, что я понял — готов слушать это всю жизнь.' },
+    { title: 'Твоя забота', text: 'Когда ты спросила, поел ли я, будто это самое важное в мире.' },
+    { title: 'Твой день рождения', text: 'Когда я вручил тебе подарок, и ты так обрадовалась.' },
+    { title: 'Наши встречи', text: 'Каждая встреча — как маленький праздник.' },
+    { title: 'Твоё "доброе утро"', text: 'Когда ты писала это утром, весь день становился светлее.' },
+    { title: 'Просто быть рядом', text: 'Главный момент — когда я понял, что мне нужно просто быть с тобой.' }
   ];
 
   const poemLinesData = [
@@ -592,15 +562,15 @@
 
   const weatherData = [
     { icon: '☀️', title: 'Солнечно', text: 'Наша погода сегодня — самая тёплая, потому что ты рядом.' },
-    { icon: '🌤️', title: 'Ясно', text: 'Небо чистое, как твои мысли обо мне. Ну, я надеюсь 😊' },
+    { icon: '🌤️', title: 'Ясно', text: 'Небо чистое, как твои мысли обо мне.' },
     { icon: '🌈', title: 'Радуга', text: 'После любого дождя появляется радуга. Ты — моя радуга.' },
-    { icon: '🌸', title: 'Цветение', text: 'Всё цветёт, потому что ты улыбаешься. Это научный факт.' },
-    { icon: '⭐', title: 'Звёздная ночь', text: 'Каждая звезда на небе — это ещё одна причина, почему я тебя люблю.' },
-    { icon: '🌙', title: 'Лунная ночь', text: 'Луна сегодня особенно красива. Но всё равно не так, как ты.' },
-    { icon: '❄️', title: 'Снежно', text: 'Холодно? Просто представь мои объятия. Уже теплее, правда?' },
-    { icon: '🌧️', title: 'Дождь', text: 'Дождь стучит по крыше, а я думаю о тебе. Дождь — это хорошо.' },
-    { icon: '💜', title: 'Любовная погода', text: 'Прогноз на сегодня: 100% любви, 0% шансов разлюбить тебя.' },
-    { icon: '🍀', title: 'Удача', text: 'Сегодня твой день. Впрочем, как и каждый день, когда ты рядом.' }
+    { icon: '🌸', title: 'Цветение', text: 'Всё цветёт, потому что ты улыбаешься.' },
+    { icon: '⭐', title: 'Звёздная ночь', text: 'Каждая звезда — причина, почему я тебя люблю.' },
+    { icon: '🌙', title: 'Лунная ночь', text: 'Луна красива. Но не так, как ты.' },
+    { icon: '❄️', title: 'Снежно', text: 'Холодно? Просто представь мои объятия.' },
+    { icon: '🌧️', title: 'Дождь', text: 'Дождь стучит по крыше, а я думаю о тебе.' },
+    { icon: '💜', title: 'Любовная погода', text: 'Прогноз: 100% любви, 0% шансов разлюбить.' },
+    { icon: '🍀', title: 'Удача', text: 'Сегодня твой день. Как и каждый день.' }
   ];
 
   // ============================================================
@@ -609,13 +579,14 @@
   const heroText = 'История моих чувств к Николь';
   let heroIndex = 0;
   let heroTyped = false;
+  let heroTimer = null;
 
   function typeHero() {
     if (heroTyped) return;
     if (heroIndex < heroText.length) {
       heroTitleEl.textContent += heroText.charAt(heroIndex);
       heroIndex++;
-      setTimeout(typeHero, 65);
+      heroTimer = setTimeout(typeHero, 65);
     } else {
       const cursor = document.createElement('span');
       cursor.className = 'cursor-blink';
@@ -627,7 +598,9 @@
   const diffDays = Math.floor((new Date() - startDate) / (1000 * 60 * 60 * 24));
   heroDateEl.textContent = `с 04 февраля 2026 — ${diffDays} дней вместе`;
 
+  // Счётчик — обновляем только когда вкладка активна
   function updateCounter() {
+    if (document.hidden) return;
     const now = new Date();
     let diff = now - startDate;
     if (diff < 0) diff = 0;
@@ -636,32 +609,35 @@
     const hours = Math.floor((totalSeconds % 86400) / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
-    document.getElementById('cDays').textContent = days.toLocaleString('ru-RU');
-    document.getElementById('cHours').textContent = String(hours).padStart(2, '0');
-    document.getElementById('cMinutes').textContent = String(minutes).padStart(2, '0');
-    document.getElementById('cSeconds').textContent = String(seconds).padStart(2, '0');
+    $('cDays').textContent = days.toLocaleString('ru-RU');
+    $('cHours').textContent = String(hours).padStart(2, '0');
+    $('cMinutes').textContent = String(minutes).padStart(2, '0');
+    $('cSeconds').textContent = String(seconds).padStart(2, '0');
   }
   updateCounter();
   setInterval(updateCounter, 1000);
 
   // ============================================================
-  // ГАЛЕРЕЯ
+  // ГАЛЕРЕЯ (DocumentFragment)
   // ============================================================
+  const galleryFragment = document.createDocumentFragment();
   galleryData.forEach((item, i) => {
     const div = document.createElement('div');
     div.className = 'gallery-item';
     div.setAttribute('data-index', i);
     div.innerHTML = `
-      <img src="${item.src}" alt="${item.caption}" loading="lazy">
+      <img src="${item.src}" alt="${item.caption}" loading="lazy" decoding="async">
       <div class="caption">${item.caption}</div>
       <div class="date">${item.date}</div>
     `;
-    galleryGrid.appendChild(div);
+    galleryFragment.appendChild(div);
   });
+  galleryGrid.appendChild(galleryFragment);
 
   // ============================================================
   // ТАЙМЛАЙН
   // ============================================================
+  const timelineFragment = document.createDocumentFragment();
   timelineData.forEach(item => {
     const div = document.createElement('div');
     div.className = 'timeline-item';
@@ -671,12 +647,14 @@
       <div class="timeline-title">${item.title}</div>
       <div class="timeline-desc">${item.desc}</div>
     `;
-    timelineContainer.appendChild(div);
+    timelineFragment.appendChild(div);
   });
+  timelineContainer.appendChild(timelineFragment);
 
   // ============================================================
-  // ЗА ЧТО Я ЛЮБЛЮ
+  // ЗА ЧТО ЛЮБЛЮ
   // ============================================================
+  const reasonsFragment = document.createDocumentFragment();
   reasonsData.forEach((r, i) => {
     const div = document.createElement('div');
     div.className = 'reason-card';
@@ -686,12 +664,14 @@
       <div class="reason-title">${r.title}</div>
       <div class="reason-text">${r.text}</div>
     `;
-    reasonsGrid.appendChild(div);
+    reasonsFragment.appendChild(div);
   });
+  reasonsGrid.appendChild(reasonsFragment);
 
   // ============================================================
   // 10 МОМЕНТОВ
   // ============================================================
+  const momentsFragment = document.createDocumentFragment();
   tenMomentsData.forEach((m, i) => {
     const div = document.createElement('div');
     div.className = 'moment-item';
@@ -702,18 +682,21 @@
         <div class="moment-text">${m.text}</div>
       </div>
     `;
-    tenMomentsList.appendChild(div);
+    momentsFragment.appendChild(div);
   });
+  tenMomentsList.appendChild(momentsFragment);
 
   // ============================================================
   // СТИХОТВОРЕНИЕ
   // ============================================================
+  const poemFragment = document.createDocumentFragment();
   poemLinesData.forEach((line) => {
     const p = document.createElement('p');
     p.className = 'poem-line';
     p.textContent = line || '\u00A0';
-    poemLinesContainer.appendChild(p);
+    poemFragment.appendChild(p);
   });
+  poemLinesContainer.appendChild(poemFragment);
 
   // ============================================================
   // КОМПЛИМЕНТ
@@ -729,7 +712,6 @@
     lastComplimentIndex = idx;
 
     complimentText.classList.add('swap-out');
-
     setTimeout(() => {
       complimentText.textContent = complimentsData[idx];
       complimentText.classList.remove('swap-out');
@@ -844,10 +826,10 @@
   ];
 
   const secretReasons = {
-    13: 'За то, что ты — моё вдохновение. Каждый день я просыпаюсь и думаю о тебе, и это делает меня счастливым.',
-    27: 'За то, что ты — мой дом. Где бы я ни был, я всегда хочу вернуться к тебе.',
-    42: 'За то, что ты — моя вселенная. Всё, что я делаю, я делаю ради твоей улыбки.',
-    66: 'За то, что ты — моё чудо. Я до сих пор не верю, что такая девушка, как ты, выбрала меня.',
+    13: 'За то, что ты — моё вдохновение.',
+    27: 'За то, что ты — мой дом.',
+    42: 'За то, что ты — моя вселенная.',
+    66: 'За то, что ты — моё чудо.',
     88: 'За то, что ты — моё всё. Николь, я люблю тебя больше, чем все слова на свете могут выразить.'
   };
 
@@ -860,7 +842,6 @@
   const cardEmojis = ['💜', '💖', '✨', '🌸', '💫', '🌟', '💗', '🎀', '💐', '🦋'];
   const getEmojiForIndex = (i) => cardEmojis[i % cardEmojis.length];
 
-  // Подсказка про секретные карточки
   const hundredSection = document.getElementById('hundredReasons');
   const secretHintEl = document.createElement('p');
   secretHintEl.className = 'hundred-secret-hint';
@@ -908,7 +889,7 @@
   }
 
   function buildHundredCards() {
-    hundredGrid.innerHTML = '';
+    const fragment = document.createDocumentFragment();
     for (let i = 1; i <= 100; i++) {
       const isSecret = secretReasons[i] !== undefined;
       const isOpened = openedReasons.has(i);
@@ -934,18 +915,15 @@
 
       card.addEventListener('click', () => {
         if (card.classList.contains('opened')) return;
-
         if (isSecret && openedReasons.size < 50) {
           card.classList.add('denied');
           setTimeout(() => card.classList.remove('denied'), 500);
           return;
         }
-
         card.classList.add('opened');
         openedReasons.add(i);
         saveOpened();
         updateHundredProgress();
-
         if (isSecret) {
           setTimeout(() => {
             showReasonPopup(i, secretReasons[i], true);
@@ -958,8 +936,9 @@
         }
       });
 
-      hundredGrid.appendChild(card);
+      fragment.appendChild(card);
     }
+    hundredGrid.appendChild(fragment);
   }
 
   function showAllReasons() {
@@ -967,13 +946,11 @@
     for (let i = 1; i <= 100; i++) {
       if (!openedReasons.has(i)) unopened.push(i);
     }
-
     if (unopened.length === 0) {
       hundredShowAll.textContent = 'Все открыты 💜';
       hundredShowAll.disabled = true;
       return;
     }
-
     unopened.forEach((i, idx) => {
       const card = hundredGrid.querySelector(`.hundred-card[data-index="${i}"]`);
       if (!card) return;
@@ -986,7 +963,6 @@
         }
       }, idx * 40);
     });
-
     setTimeout(() => {
       hundredShowAll.textContent = 'Все открыты 💜';
       hundredShowAll.disabled = true;
@@ -1012,7 +988,6 @@
 
   hundredShowAll.addEventListener('click', showAllReasons);
 
-  // Строим карточки ПОСЛЕ создания попапа
   buildHundredCards();
   updateHundredProgress();
 
@@ -1061,7 +1036,6 @@
   compatBtn.addEventListener('click', () => {
     compatBtn.disabled = true;
     compatBtn.textContent = 'Считаем... 💫';
-
     let current = 0;
     const target = 100;
 
@@ -1082,7 +1056,7 @@
   });
 
   // ============================================================
-  // ПИСЬМО (эффект печати)
+  // ПИСЬМО (эффект печати — оптимизирован через requestAnimationFrame)
   // ============================================================
   let letterStarted = false;
 
@@ -1093,13 +1067,17 @@
     const text = letterFullText;
     let i = 0;
     const speed = 25;
+    let lastBlotIndex = 0;
 
     function type() {
       if (i < text.length) {
-        letterTextEl.textContent += text.charAt(i);
-        i++;
+        // Прибавляем сразу по 2-3 символа для скорости
+        const chunk = 2;
+        letterTextEl.textContent += text.substr(i, chunk);
+        i += chunk;
 
-        if (i % 80 === 0) {
+        if (i - lastBlotIndex > 100) {
+          lastBlotIndex = i;
           const blot = document.createElement('span');
           blot.className = 'ink-blot';
           const size = 20 + Math.random() * 40;
@@ -1118,7 +1096,6 @@
         letterTextEl.appendChild(cursor);
       }
     }
-
     type();
   }
 
@@ -1134,8 +1111,9 @@
       let i = 0;
       function type() {
         if (i < secretMessage.length) {
-          secretTextEl.textContent += secretMessage.charAt(i);
-          i++;
+          const chunk = 3;
+          secretTextEl.textContent += secretMessage.substr(i, chunk);
+          i += chunk;
           setTimeout(type, 18);
         }
       }
@@ -1162,17 +1140,18 @@
 
 Твой бублик 🥯`;
 
+  let futureInterval = null;
+
   function updateFutureCountdown() {
+    if (document.hidden) return;
     const now = new Date();
     let diff = FUTURE_DATE - now;
     if (diff < 0) diff = 0;
-
     const totalSeconds = Math.floor(diff / 1000);
     const days = Math.floor(totalSeconds / 86400);
     const hours = Math.floor((totalSeconds % 86400) / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
-
     fcDays.textContent = days;
     fcHours.textContent = String(hours).padStart(2, '0');
     fcMinutes.textContent = String(minutes).padStart(2, '0');
@@ -1185,11 +1164,14 @@
     futureTitle.textContent = 'Письмо открыто 💜';
     localStorage.setItem(STORAGE_FUTURE_UNLOCKED, 'true');
 
+    if (futureInterval) clearInterval(futureInterval);
+
     let i = 0;
     function type() {
       if (i < futureLetterBody.length) {
-        futureLetterText.textContent += futureLetterBody.charAt(i);
-        i++;
+        const chunk = 3;
+        futureLetterText.textContent += futureLetterBody.substr(i, chunk);
+        i += chunk;
         setTimeout(type, 20);
       }
     }
@@ -1201,7 +1183,7 @@
     openFutureLetter();
   } else {
     updateFutureCountdown();
-    setInterval(updateFutureCountdown, 1000);
+    futureInterval = setInterval(updateFutureCountdown, 1000);
   }
 
   futureOpenBtn.addEventListener('click', () => {
@@ -1242,11 +1224,7 @@
     surpriseText.textContent = msg.text;
     surpriseModal.classList.add('active');
   });
-
-  surpriseClose.addEventListener('click', () => {
-    surpriseModal.classList.remove('active');
-  });
-
+  surpriseClose.addEventListener('click', () => surpriseModal.classList.remove('active'));
   surpriseModal.addEventListener('click', (e) => {
     if (e.target === surpriseModal) surpriseModal.classList.remove('active');
   });
@@ -1283,13 +1261,11 @@
   lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox) closeLightbox();
   });
-
   lightboxPrev.addEventListener('click', (e) => {
     e.stopPropagation();
     lightboxIndex = (lightboxIndex - 1 + galleryData.length) % galleryData.length;
     updateLightbox();
   });
-
   lightboxNext.addEventListener('click', (e) => {
     e.stopPropagation();
     lightboxIndex = (lightboxIndex + 1) % galleryData.length;
@@ -1315,9 +1291,7 @@
     welcomeConfetti();
   }
 
-  if (easterEggTarget) {
-    easterEggTarget.addEventListener('click', showEaster);
-  }
+  if (easterEggTarget) easterEggTarget.addEventListener('click', showEaster);
 
   document.addEventListener('keydown', (e) => {
     if (e.key === KONAMI[konamiIndex]) {
@@ -1337,7 +1311,7 @@
   });
 
   // ============================================================
-  // ИГРА "ПОЙМАЙ СЕРДЕЧКО"
+  // ИГРА
   // ============================================================
   const heartEmojis = ['💜', '💖', '💗', '♥', '💛', '🌸'];
   let gameScore = 0;
@@ -1376,10 +1350,7 @@
       heart.remove();
     }, { once: true });
 
-    heart.addEventListener('animationend', () => {
-      heart.remove();
-    });
-
+    heart.addEventListener('animationend', () => heart.remove());
     gameArea.appendChild(heart);
   }
 
@@ -1423,15 +1394,10 @@
       gameBestEl.textContent = gameBest;
       message = `🎉 Новый рекорд! Ты поймала ${gameScore} сердечек!`;
       welcomeConfetti();
-    } else if (gameScore >= 25) {
-      message = `💜 Вау! ${gameScore} сердечек — ты невероятна!`;
-    } else if (gameScore >= 15) {
-      message = `✨ Отлично! ${gameScore} сердечек поймано!`;
-    } else if (gameScore >= 5) {
-      message = `😊 Хорошо! ${gameScore} сердечек у тебя в руках.`;
-    } else {
-      message = `Поймано ${gameScore} сердечек. Попробуй ещё раз! 💜`;
-    }
+    } else if (gameScore >= 25) message = `💜 Вау! ${gameScore} сердечек — ты невероятна!`;
+    else if (gameScore >= 15) message = `✨ Отлично! ${gameScore} сердечек поймано!`;
+    else if (gameScore >= 5) message = `😊 Хорошо! ${gameScore} сердечек у тебя в руках.`;
+    else message = `Поймано ${gameScore} сердечек. Попробуй ещё раз! 💜`;
 
     gameResult.textContent = message;
     gameResult.classList.add('visible');
@@ -1444,7 +1410,6 @@
   // ============================================================
   let audioStarted = false;
   let previousVolume = 0.7;
-
   bgAudio.volume = 0.7;
 
   function startAudio() {
@@ -1455,16 +1420,11 @@
       let v = 0;
       const fade = setInterval(() => {
         v += 0.05;
-        if (v >= 0.7) {
-          v = 0.7;
-          clearInterval(fade);
-        }
+        if (v >= 0.7) { v = 0.7; clearInterval(fade); }
         bgAudio.volume = v;
       }, 60);
       playPauseBtn.textContent = '⏸';
-    }).catch(() => {
-      audioStarted = false;
-    });
+    }).catch(() => { audioStarted = false; });
   }
 
   playPauseBtn.addEventListener('click', () => {
@@ -1520,11 +1480,10 @@
     entries.forEach(entry => {
       if (entry.isIntersecting) entry.target.classList.add('visible');
     });
-  }, { threshold: 0.15 });
+  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
 
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  // Отдельно — запуск печати письма, когда оно появится
   const letterObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) typeLetter();
@@ -1533,36 +1492,56 @@
   letterObserver.observe(letterPaper);
 
   // ============================================================
-  // ПРОГРЕСС ЧТЕНИЯ
+  // ПРОГРЕСС ЧТЕНИЯ (throttle через rAF)
   // ============================================================
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    readingProgress.style.width = percent + '%';
-  }, { passive: true });
+  let scrollTicking = false;
+  let lastScrollY = 0;
 
-  // ============================================================
-  // НАВИГАЦИЯ / ПЛЕЕР / КНОПКА НАВЕРХ ПРИ СКРОЛЛЕ
-  // ============================================================
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 400) {
-      navBar.classList.add('visible');
-      audioPlayer.classList.add('visible');
-      backToTop.classList.add('visible');
-    } else {
-      navBar.classList.remove('visible');
-      audioPlayer.classList.remove('visible');
-      backToTop.classList.remove('visible');
+  function onScroll() {
+    lastScrollY = window.scrollY;
+    if (!scrollTicking) {
+      window.requestAnimationFrame(() => {
+        const scrollTop = lastScrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        readingProgress.style.width = percent + '%';
+
+        if (scrollTop > 400) {
+          navBar.classList.add('visible');
+          audioPlayer.classList.add('visible');
+          backToTop.classList.add('visible');
+        } else {
+          navBar.classList.remove('visible');
+          audioPlayer.classList.remove('visible');
+          backToTop.classList.remove('visible');
+        }
+        scrollTicking = false;
+      });
+      scrollTicking = true;
     }
-  }, { passive: true });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
 
   backToTop.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   // ============================================================
-  // АВТОЗАПУСК ПЕЧАТИ ЗАГОЛОВКА
+  // ПРИОСТАНОВКА АНИМАЦИЙ ПРИ СКРЫТОЙ ВКЛАДКЕ
+  // ============================================================
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      document.body.style.animationPlayState = 'paused';
+    } else {
+      document.body.style.animationPlayState = 'running';
+      updateCounter();
+      updateFutureCountdown();
+    }
+  });
+
+  // ============================================================
+  // АВТОЗАПУСК ПЕЧАТИ
   // ============================================================
   window.addEventListener('load', () => {
     if (sessionStorage.getItem(STORAGE_UNLOCKED) === 'true') {
