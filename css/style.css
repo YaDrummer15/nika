@@ -1815,7 +1815,6 @@ body.dark .ink-blot {
   margin-bottom: 1rem;
   filter: drop-shadow(0 10px 20px rgba(142, 36, 170, 0.3));
 }
-.future-letter-box.opened .future-lock { content: '💌'; }
 .future-title {
   font-family: 'Playfair Display', serif;
   font-size: clamp(1.4rem, 4vw, 2rem);

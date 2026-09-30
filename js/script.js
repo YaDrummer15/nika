@@ -8,26 +8,28 @@
   const isLowEnd = isMobile || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
 
   // ============================================================
-  // ЗВЁЗДНОЕ НЕБО (меньше звёзд на мобилке)
+  // ЗВЁЗДНОЕ НЕБО
   // ============================================================
   const starfield = document.getElementById('starfield');
   const STAR_COUNT = isLowEnd ? 40 : 90;
 
-  const starFragment = document.createDocumentFragment();
-  for (let i = 0; i < STAR_COUNT; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    const size = Math.random() * 2 + 1;
-    star.style.width = size + 'px';
-    star.style.height = size + 'px';
-    star.style.left = Math.random() * 100 + '%';
-    star.style.top = Math.random() * 100 + '%';
-    star.style.animationDuration = (2 + Math.random() * 4) + 's';
-    star.style.animationDelay = (Math.random() * 5) + 's';
-    star.style.opacity = 0.3 + Math.random() * 0.7;
-    starFragment.appendChild(star);
+  if (starfield) {
+    const starFragment = document.createDocumentFragment();
+    for (let i = 0; i < STAR_COUNT; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      const size = Math.random() * 2 + 1;
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDuration = (2 + Math.random() * 4) + 's';
+      star.style.animationDelay = (Math.random() * 5) + 's';
+      star.style.opacity = 0.3 + Math.random() * 0.7;
+      starFragment.appendChild(star);
+    }
+    starfield.appendChild(starFragment);
   }
-  starfield.appendChild(starFragment);
 
   // ============================================================
   // ЦВЕТОЧНЫЙ ФОН
@@ -36,18 +38,20 @@
   const petalChars = ['🌸', '🌺', '🌷', '🌹', '💐', '🌼', '💮'];
   const PETAL_COUNT = isLowEnd ? 5 : 12;
 
-  const petalFragment = document.createDocumentFragment();
-  for (let i = 0; i < PETAL_COUNT; i++) {
-    const petal = document.createElement('span');
-    petal.className = 'petal';
-    petal.textContent = petalChars[Math.floor(Math.random() * petalChars.length)];
-    petal.style.left = Math.random() * 100 + '%';
-    petal.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
-    petal.style.animationDuration = (10 + Math.random() * 12) + 's';
-    petal.style.animationDelay = (Math.random() * 15) + 's';
-    petalFragment.appendChild(petal);
+  if (petalsBg) {
+    const petalFragment = document.createDocumentFragment();
+    for (let i = 0; i < PETAL_COUNT; i++) {
+      const petal = document.createElement('span');
+      petal.className = 'petal';
+      petal.textContent = petalChars[Math.floor(Math.random() * petalChars.length)];
+      petal.style.left = Math.random() * 100 + '%';
+      petal.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
+      petal.style.animationDuration = (10 + Math.random() * 12) + 's';
+      petal.style.animationDelay = (Math.random() * 15) + 's';
+      petalFragment.appendChild(petal);
+    }
+    petalsBg.appendChild(petalFragment);
   }
-  petalsBg.appendChild(petalFragment);
 
   // ============================================================
   // ПЛАВАЮЩИЕ СЕРДЕЧКИ
@@ -56,19 +60,21 @@
   const heartChars = ['♥', '❤', '💜', '💖', '💗'];
   const heartCount = isLowEnd ? 5 : 12;
 
-  const heartFragment = document.createDocumentFragment();
-  for (let i = 0; i < heartCount; i++) {
-    const span = document.createElement('span');
-    span.className = 'heart-float';
-    span.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
-    span.style.left = Math.random() * 100 + '%';
-    span.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
-    span.style.animationDuration = (12 + Math.random() * 18) + 's';
-    span.style.animationDelay = (Math.random() * 15) + 's';
-    span.style.color = ['#AB47BC', '#CE93D8', '#8E24AA', '#FFB74D'][Math.floor(Math.random() * 4)];
-    heartFragment.appendChild(span);
+  if (heartsContainer) {
+    const heartFragment = document.createDocumentFragment();
+    for (let i = 0; i < heartCount; i++) {
+      const span = document.createElement('span');
+      span.className = 'heart-float';
+      span.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
+      span.style.left = Math.random() * 100 + '%';
+      span.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+      span.style.animationDuration = (12 + Math.random() * 18) + 's';
+      span.style.animationDelay = (Math.random() * 15) + 's';
+      span.style.color = ['#AB47BC', '#CE93D8', '#8E24AA', '#FFB74D'][Math.floor(Math.random() * 4)];
+      heartFragment.appendChild(span);
+    }
+    heartsContainer.appendChild(heartFragment);
   }
-  heartsContainer.appendChild(heartFragment);
 
   // ============================================================
   // КОНСТАНТЫ
@@ -84,9 +90,10 @@
   const startDate = new Date(2026, 1, 4, 0, 0, 0);
 
   // ============================================================
-  // ССЫЛКИ
+  // ССЫЛКИ (кэш для скорости)
   // ============================================================
   const $ = (id) => document.getElementById(id);
+
   const lockScreen = $('lockScreen');
   const lockForm = $('lockForm');
   const lockInput = $('lockInput');
@@ -172,6 +179,12 @@
   const weatherText = $('weatherText');
   const weatherRefresh = $('weatherRefresh');
 
+  // Кэш для счётчика времени
+  const cDays = $('cDays');
+  const cHours = $('cHours');
+  const cMinutes = $('cMinutes');
+  const cSeconds = $('cSeconds');
+
   // ============================================================
   // ПОПАП ПРИЧИНЫ
   // ============================================================
@@ -179,7 +192,7 @@
   reasonPopup.className = 'reason-popup';
   reasonPopup.id = 'reasonPopup';
   reasonPopup.innerHTML = `
-    <button class="reason-popup-close" id="reasonPopupClose">&times;</button>
+    <button class="reason-popup-close" id="reasonPopupClose" aria-label="Закрыть">&times;</button>
     <span class="secret-popup-badge" style="display:none;">⭐ Секретная причина ⭐</span>
     <div class="reason-popup-num"></div>
     <div class="reason-popup-text"></div>
@@ -268,10 +281,10 @@
   }
 
   // ============================================================
-  // КОНФЕТТИ (меньше частиц + reuse через DocumentFragment)
+  // КОНФЕТТИ
   // ============================================================
   function welcomeConfetti() {
-    if (isLowEnd) return; // не запускаем на слабых устройствах
+    if (isLowEnd) return;
     const chars = ['💜', '💖', '💗', '♥', '✨', '🌸', '💛', '🎉', '⭐', '🌟'];
     const fragment = document.createDocumentFragment();
     const count = 40;
@@ -296,39 +309,41 @@
   // БЛОКИРОВКА
   // ============================================================
   function unlockSite() {
-    lockIcon.textContent = '🔓';
-    lockScreen.classList.add('unlocked');
+    if (lockIcon) lockIcon.textContent = '🔓';
+    if (lockScreen) lockScreen.classList.add('unlocked');
     document.body.classList.remove('locked');
     document.body.classList.add('unlocked');
     updateVisits();
-    setTimeout(() => { lockScreen.style.display = 'none'; }, 1000);
+    setTimeout(() => { if (lockScreen) lockScreen.style.display = 'none'; }, 1000);
     setTimeout(() => { showLoveIntro(); }, 1200);
   }
 
   if (sessionStorage.getItem(STORAGE_UNLOCKED) === 'true') {
-    lockScreen.style.display = 'none';
+    if (lockScreen) lockScreen.style.display = 'none';
     document.body.classList.remove('locked');
     document.body.classList.add('unlocked');
   }
 
-  lockForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const value = lockInput.value.trim();
-    if (value.toLowerCase() === CORRECT_PASSWORD.toLowerCase()) {
-      sessionStorage.setItem(STORAGE_UNLOCKED, 'true');
-      lockError.classList.remove('visible');
-      lockInput.classList.remove('error');
-      unlockSite();
-    } else {
-      lockInput.classList.add('error');
-      lockError.textContent = 'Неверный пароль. Попробуй ещё раз 😊';
-      lockError.classList.add('visible');
-      setTimeout(() => { lockInput.value = ''; lockInput.focus(); }, 500);
-      setTimeout(() => lockInput.classList.remove('error'), 1500);
-    }
-  });
+  if (lockForm) {
+    lockForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const value = lockInput.value.trim();
+      if (value.toLowerCase() === CORRECT_PASSWORD.toLowerCase()) {
+        sessionStorage.setItem(STORAGE_UNLOCKED, 'true');
+        lockError.classList.remove('visible');
+        lockInput.classList.remove('error');
+        unlockSite();
+      } else {
+        lockInput.classList.add('error');
+        lockError.textContent = 'Неверный пароль. Попробуй ещё раз 😊';
+        lockError.classList.add('visible');
+        setTimeout(() => { lockInput.value = ''; lockInput.focus(); }, 500);
+        setTimeout(() => lockInput.classList.remove('error'), 1500);
+      }
+    });
+  }
 
-  setTimeout(() => lockInput.focus(), 600);
+  setTimeout(() => { if (lockInput) lockInput.focus(); }, 600);
 
   // ============================================================
   // "I LOVE YOU"
@@ -369,9 +384,13 @@
   const totalHeight = 7;
 
   function buildLoveHearts() {
+    if (!loveHeartsContainer) return;
     loveHeartsContainer.innerHTML = '';
-    const containerWidth = window.innerWidth;
-    const containerHeight = window.innerHeight;
+
+    const rect = loveHeartsContainer.getBoundingClientRect();
+    const containerWidth = rect.width || window.innerWidth;
+    const containerHeight = rect.height || window.innerHeight;
+
     const maxWidth = Math.min(containerWidth * 0.9, 900);
     const maxHeight = Math.min(containerHeight * 0.5, 400);
     const pixelW = maxWidth / totalWidth;
@@ -400,6 +419,7 @@
     }
     loveHeartsContainer.appendChild(fragment);
 
+    // Текст "I love you, Николь"
     let loveText = loveIntro.querySelector('.love-text');
     if (loveText) loveText.remove();
     loveText = document.createElement('div');
@@ -409,6 +429,7 @@
   }
 
   function buildBackgroundHearts() {
+    if (!loveIntro) return;
     loveIntro.querySelectorAll('.love-bg-heart').forEach(h => h.remove());
     const fragment = document.createDocumentFragment();
     const count = isLowEnd ? 8 : 15;
@@ -426,6 +447,7 @@
   }
 
   function showLoveIntro() {
+    if (!loveIntro) return;
     loveIntro.classList.remove('hidden');
     buildLoveHearts();
     buildBackgroundHearts();
@@ -433,17 +455,18 @@
   }
 
   function hideLoveIntro() {
+    if (!loveIntro) return;
     loveIntro.classList.add('hidden');
     setTimeout(() => {
       if (heroTitleEl && heroTitleEl.textContent === '') typeHero();
     }, 600);
   }
 
-  loveSkipBtn.addEventListener('click', hideLoveIntro);
+  if (loveSkipBtn) loveSkipBtn.addEventListener('click', hideLoveIntro);
 
   let loveResizeTimer;
   window.addEventListener('resize', () => {
-    if (loveIntro.classList.contains('hidden')) return;
+    if (!loveIntro || loveIntro.classList.contains('hidden')) return;
     clearTimeout(loveResizeTimer);
     loveResizeTimer = setTimeout(buildLoveHearts, 300);
   });
@@ -537,7 +560,7 @@
 
   const secretMessage = `Николь,
 
-Знаешь, любимая, иногда я задумываюсь, как объяснить тебе всю силу моей любви, но понимаю  ни одно слово в мире не сможет описать то, что я чувствую к тебе. Это не просто симпатия, не просто привычка, это что-то большее, что-то, что стало частью меня самого.
+Знаешь, любимая, иногда я задумываюсь, как объяснить тебе всю силу моей любви, но понимаю — ни одно слово в мире не сможет описать то, что я чувствую к тебе. Это не просто симпатия, не просто привычка, это что-то большее, что-то, что стало частью меня самого.
 
 Я люблю тебя так, что каждое утро просыпаюсь с мыслью о тебе. Я люблю тебя в каждой своей мечте, в каждом вдохе и ударе сердца.
 
@@ -579,14 +602,13 @@
   const heroText = 'История моих чувств к Николь';
   let heroIndex = 0;
   let heroTyped = false;
-  let heroTimer = null;
 
   function typeHero() {
-    if (heroTyped) return;
+    if (heroTyped || !heroTitleEl) return;
     if (heroIndex < heroText.length) {
       heroTitleEl.textContent += heroText.charAt(heroIndex);
       heroIndex++;
-      heroTimer = setTimeout(typeHero, 65);
+      setTimeout(typeHero, 65);
     } else {
       const cursor = document.createElement('span');
       cursor.className = 'cursor-blink';
@@ -595,10 +617,11 @@
     }
   }
 
-  const diffDays = Math.floor((new Date() - startDate) / (1000 * 60 * 60 * 24));
-  heroDateEl.textContent = `с 04 февраля 2026 — ${diffDays} дней вместе`;
+  if (heroDateEl) {
+    const diffDays = Math.floor((new Date() - startDate) / (1000 * 60 * 60 * 24));
+    heroDateEl.textContent = `с 04 февраля 2026 — ${diffDays} дней вместе`;
+  }
 
-  // Счётчик — обновляем только когда вкладка активна
   function updateCounter() {
     if (document.hidden) return;
     const now = new Date();
@@ -609,94 +632,104 @@
     const hours = Math.floor((totalSeconds % 86400) / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
-    $('cDays').textContent = days.toLocaleString('ru-RU');
-    $('cHours').textContent = String(hours).padStart(2, '0');
-    $('cMinutes').textContent = String(minutes).padStart(2, '0');
-    $('cSeconds').textContent = String(seconds).padStart(2, '0');
+    if (cDays) cDays.textContent = days.toLocaleString('ru-RU');
+    if (cHours) cHours.textContent = String(hours).padStart(2, '0');
+    if (cMinutes) cMinutes.textContent = String(minutes).padStart(2, '0');
+    if (cSeconds) cSeconds.textContent = String(seconds).padStart(2, '0');
   }
   updateCounter();
   setInterval(updateCounter, 1000);
 
   // ============================================================
-  // ГАЛЕРЕЯ (DocumentFragment)
+  // ГАЛЕРЕЯ
   // ============================================================
-  const galleryFragment = document.createDocumentFragment();
-  galleryData.forEach((item, i) => {
-    const div = document.createElement('div');
-    div.className = 'gallery-item';
-    div.setAttribute('data-index', i);
-    div.innerHTML = `
-      <img src="${item.src}" alt="${item.caption}" loading="lazy" decoding="async">
-      <div class="caption">${item.caption}</div>
-      <div class="date">${item.date}</div>
-    `;
-    galleryFragment.appendChild(div);
-  });
-  galleryGrid.appendChild(galleryFragment);
+  if (galleryGrid) {
+    const galleryFragment = document.createDocumentFragment();
+    galleryData.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'gallery-item';
+      div.setAttribute('data-index', i);
+      div.innerHTML = `
+        <img src="${item.src}" alt="${item.caption}" loading="lazy" decoding="async">
+        <div class="caption">${item.caption}</div>
+        <div class="date">${item.date}</div>
+      `;
+      galleryFragment.appendChild(div);
+    });
+    galleryGrid.appendChild(galleryFragment);
+  }
 
   // ============================================================
   // ТАЙМЛАЙН
   // ============================================================
-  const timelineFragment = document.createDocumentFragment();
-  timelineData.forEach(item => {
-    const div = document.createElement('div');
-    div.className = 'timeline-item';
-    div.innerHTML = `
-      <div class="timeline-dot"></div>
-      <div class="timeline-date">${item.date}</div>
-      <div class="timeline-title">${item.title}</div>
-      <div class="timeline-desc">${item.desc}</div>
-    `;
-    timelineFragment.appendChild(div);
-  });
-  timelineContainer.appendChild(timelineFragment);
+  if (timelineContainer) {
+    const timelineFragment = document.createDocumentFragment();
+    timelineData.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'timeline-item';
+      div.innerHTML = `
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">${item.date}</div>
+        <div class="timeline-title">${item.title}</div>
+        <div class="timeline-desc">${item.desc}</div>
+      `;
+      timelineFragment.appendChild(div);
+    });
+    timelineContainer.appendChild(timelineFragment);
+  }
 
   // ============================================================
   // ЗА ЧТО ЛЮБЛЮ
   // ============================================================
-  const reasonsFragment = document.createDocumentFragment();
-  reasonsData.forEach((r, i) => {
-    const div = document.createElement('div');
-    div.className = 'reason-card';
-    div.style.transitionDelay = (i * 0.08) + 's';
-    div.innerHTML = `
-      <span class="reason-icon">${r.icon}</span>
-      <div class="reason-title">${r.title}</div>
-      <div class="reason-text">${r.text}</div>
-    `;
-    reasonsFragment.appendChild(div);
-  });
-  reasonsGrid.appendChild(reasonsFragment);
+  if (reasonsGrid) {
+    const reasonsFragment = document.createDocumentFragment();
+    reasonsData.forEach((r, i) => {
+      const div = document.createElement('div');
+      div.className = 'reason-card';
+      div.style.transitionDelay = (i * 0.08) + 's';
+      div.innerHTML = `
+        <span class="reason-icon">${r.icon}</span>
+        <div class="reason-title">${r.title}</div>
+        <div class="reason-text">${r.text}</div>
+      `;
+      reasonsFragment.appendChild(div);
+    });
+    reasonsGrid.appendChild(reasonsFragment);
+  }
 
   // ============================================================
   // 10 МОМЕНТОВ
   // ============================================================
-  const momentsFragment = document.createDocumentFragment();
-  tenMomentsData.forEach((m, i) => {
-    const div = document.createElement('div');
-    div.className = 'moment-item';
-    div.innerHTML = `
-      <div class="moment-num">${String(i + 1).padStart(2, '0')}</div>
-      <div class="moment-content">
-        <div class="moment-title">${m.title}</div>
-        <div class="moment-text">${m.text}</div>
-      </div>
-    `;
-    momentsFragment.appendChild(div);
-  });
-  tenMomentsList.appendChild(momentsFragment);
+  if (tenMomentsList) {
+    const momentsFragment = document.createDocumentFragment();
+    tenMomentsData.forEach((m, i) => {
+      const div = document.createElement('div');
+      div.className = 'moment-item';
+      div.innerHTML = `
+        <div class="moment-num">${String(i + 1).padStart(2, '0')}</div>
+        <div class="moment-content">
+          <div class="moment-title">${m.title}</div>
+          <div class="moment-text">${m.text}</div>
+        </div>
+      `;
+      momentsFragment.appendChild(div);
+    });
+    tenMomentsList.appendChild(momentsFragment);
+  }
 
   // ============================================================
   // СТИХОТВОРЕНИЕ
   // ============================================================
-  const poemFragment = document.createDocumentFragment();
-  poemLinesData.forEach((line) => {
-    const p = document.createElement('p');
-    p.className = 'poem-line';
-    p.textContent = line || '\u00A0';
-    poemFragment.appendChild(p);
-  });
-  poemLinesContainer.appendChild(poemFragment);
+  if (poemLinesContainer) {
+    const poemFragment = document.createDocumentFragment();
+    poemLinesData.forEach((line) => {
+      const p = document.createElement('p');
+      p.className = 'poem-line';
+      p.textContent = line || '\u00A0';
+      poemFragment.appendChild(p);
+    });
+    poemLinesContainer.appendChild(poemFragment);
+  }
 
   // ============================================================
   // КОМПЛИМЕНТ
@@ -704,21 +737,23 @@
   let complimentCount = 0;
   let lastComplimentIndex = -1;
 
-  complimentBtn.addEventListener('click', () => {
-    let idx;
-    do {
-      idx = Math.floor(Math.random() * complimentsData.length);
-    } while (idx === lastComplimentIndex && complimentsData.length > 1);
-    lastComplimentIndex = idx;
+  if (complimentBtn) {
+    complimentBtn.addEventListener('click', () => {
+      let idx;
+      do {
+        idx = Math.floor(Math.random() * complimentsData.length);
+      } while (idx === lastComplimentIndex && complimentsData.length > 1);
+      lastComplimentIndex = idx;
 
-    complimentText.classList.add('swap-out');
-    setTimeout(() => {
-      complimentText.textContent = complimentsData[idx];
-      complimentText.classList.remove('swap-out');
-      complimentCount++;
-      complimentCounter.textContent = `Сказано комплиментов: ${complimentCount}`;
-    }, 400);
-  });
+      complimentText.classList.add('swap-out');
+      setTimeout(() => {
+        complimentText.textContent = complimentsData[idx];
+        complimentText.classList.remove('swap-out');
+        complimentCount++;
+        if (complimentCounter) complimentCounter.textContent = `Сказано комплиментов: ${complimentCount}`;
+      }, 400);
+    });
+  }
 
   // ============================================================
   // 100 ПРИЧИН
@@ -843,18 +878,22 @@
   const getEmojiForIndex = (i) => cardEmojis[i % cardEmojis.length];
 
   const hundredSection = document.getElementById('hundredReasons');
-  const secretHintEl = document.createElement('p');
-  secretHintEl.className = 'hundred-secret-hint';
-  secretHintEl.id = 'hundredSecretHint';
-  hundredSection.appendChild(secretHintEl);
+  let secretHintEl = null;
+  if (hundredSection) {
+    secretHintEl = document.createElement('p');
+    secretHintEl.className = 'hundred-secret-hint';
+    secretHintEl.id = 'hundredSecretHint';
+    hundredSection.appendChild(secretHintEl);
+  }
 
   let finalShown = false;
 
   function updateHundredProgress() {
+    if (!hundredProgressBar) return;
     const count = openedReasons.size;
     const percent = Math.round((count / 100) * 100);
     hundredProgressBar.style.width = percent + '%';
-    hundredProgressText.textContent = `${count} из 100`;
+    if (hundredProgressText) hundredProgressText.textContent = `${count} из 100`;
 
     let level = 'Только начинаем ✨';
     if (count >= 100) level = 'Ты открыла все 100! Ты — моё всё 💜';
@@ -864,12 +903,14 @@
     else if (count >= 30) level = 'Ты уже далеко зашла! 🌸';
     else if (count >= 15) level = 'Отличное начало! 💜';
     else if (count >= 5) level = 'Продолжай в том же духе! ✨';
-    hundredProgressLevel.textContent = level;
+    if (hundredProgressLevel) hundredProgressLevel.textContent = level;
 
     const remaining = 100 - count;
-    hundredProgressRemaining.textContent = remaining > 0
-      ? `Осталось открыть: ${remaining}`
-      : 'Ты открыла все причины! 🎉';
+    if (hundredProgressRemaining) {
+      hundredProgressRemaining.textContent = remaining > 0
+        ? `Осталось открыть: ${remaining}`
+        : 'Ты открыла все причины! 🎉';
+    }
 
     if (count >= 100 && !finalShown) {
       finalShown = true;
@@ -880,15 +921,18 @@
       }, 400);
     }
 
-    if (count >= 10 && count < 100) {
-      secretHintEl.innerHTML = '💡 Среди этих 100 причин спрятаны <strong>5 особенных</strong>. Они выглядят иначе — найди их все!';
-      secretHintEl.classList.add('visible');
-    } else {
-      secretHintEl.classList.remove('visible');
+    if (secretHintEl) {
+      if (count >= 10 && count < 100) {
+        secretHintEl.innerHTML = '💡 Среди этих 100 причин спрятаны <strong>5 особенных</strong>. Они выглядят иначе — найди их все!';
+        secretHintEl.classList.add('visible');
+      } else {
+        secretHintEl.classList.remove('visible');
+      }
     }
   }
 
   function buildHundredCards() {
+    if (!hundredGrid) return;
     const fragment = document.createDocumentFragment();
     for (let i = 1; i <= 100; i++) {
       const isSecret = secretReasons[i] !== undefined;
@@ -964,29 +1008,33 @@
       }, idx * 40);
     });
     setTimeout(() => {
-      hundredShowAll.textContent = 'Все открыты 💜';
-      hundredShowAll.disabled = true;
+      if (hundredShowAll) {
+        hundredShowAll.textContent = 'Все открыты 💜';
+        hundredShowAll.disabled = true;
+      }
     }, unopened.length * 40 + 500);
   }
 
-  hundredRandom.addEventListener('click', () => {
-    const closed = [];
-    for (let i = 1; i <= 100; i++) {
-      if (!openedReasons.has(i)) closed.push(i);
-    }
-    if (closed.length === 0) {
-      showReasonPopup('★', 'Ты уже открыла все 100 причин! Ты — моё всё 💜', true);
-      return;
-    }
-    const pick = closed[Math.floor(Math.random() * closed.length)];
-    const card = hundredGrid.querySelector(`.hundred-card[data-index="${pick}"]`);
-    if (card) {
-      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      setTimeout(() => card.click(), 500);
-    }
-  });
+  if (hundredRandom) {
+    hundredRandom.addEventListener('click', () => {
+      const closed = [];
+      for (let i = 1; i <= 100; i++) {
+        if (!openedReasons.has(i)) closed.push(i);
+      }
+      if (closed.length === 0) {
+        showReasonPopup('★', 'Ты уже открыла все 100 причин! Ты — моё всё 💜', true);
+        return;
+      }
+      const pick = closed[Math.floor(Math.random() * closed.length)];
+      const card = hundredGrid.querySelector(`.hundred-card[data-index="${pick}"]`);
+      if (card) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => card.click(), 500);
+      }
+    });
+  }
 
-  hundredShowAll.addEventListener('click', showAllReasons);
+  if (hundredShowAll) hundredShowAll.addEventListener('click', showAllReasons);
 
   buildHundredCards();
   updateHundredProgress();
@@ -998,6 +1046,7 @@
 
   function setWeather(idx) {
     const w = weatherData[idx];
+    if (!weatherIcon || !weatherTitle || !weatherText) return;
     weatherIcon.style.opacity = '0';
     weatherTitle.style.opacity = '0';
     weatherText.style.opacity = '0';
@@ -1011,14 +1060,16 @@
     }, 300);
   }
 
-  weatherRefresh.addEventListener('click', () => {
-    let next;
-    do {
-      next = Math.floor(Math.random() * weatherData.length);
-    } while (next === weatherIndex && weatherData.length > 1);
-    weatherIndex = next;
-    setWeather(weatherIndex);
-  });
+  if (weatherRefresh) {
+    weatherRefresh.addEventListener('click', () => {
+      let next;
+      do {
+        next = Math.floor(Math.random() * weatherData.length);
+      } while (next === weatherIndex && weatherData.length > 1);
+      weatherIndex = next;
+      setWeather(weatherIndex);
+    });
+  }
 
   setWeather(0);
 
@@ -1033,35 +1084,37 @@
     '100% совместимость. Это судьба, иначе не скажешь 🌟'
   ];
 
-  compatBtn.addEventListener('click', () => {
-    compatBtn.disabled = true;
-    compatBtn.textContent = 'Считаем... 💫';
-    let current = 0;
-    const target = 100;
+  if (compatBtn) {
+    compatBtn.addEventListener('click', () => {
+      compatBtn.disabled = true;
+      compatBtn.textContent = 'Считаем... 💫';
+      let current = 0;
+      const target = 100;
 
-    const counter = setInterval(() => {
-      current += 2;
-      if (current >= target) {
-        current = target;
-        clearInterval(counter);
-        compatText.textContent = compatPhrases[Math.floor(Math.random() * compatPhrases.length)];
-        compatResult.classList.add('visible');
-        compatBtn.textContent = '💜 Проверено! 💜';
-        welcomeConfetti();
-      }
-      compatPercent.textContent = current + '%';
-      const offset = 327 - (327 * current / 100);
-      compatFill.style.strokeDashoffset = offset;
-    }, 40);
-  });
+      const counter = setInterval(() => {
+        current += 2;
+        if (current >= target) {
+          current = target;
+          clearInterval(counter);
+          if (compatText) compatText.textContent = compatPhrases[Math.floor(Math.random() * compatPhrases.length)];
+          if (compatResult) compatResult.classList.add('visible');
+          compatBtn.textContent = '💜 Проверено! 💜';
+          welcomeConfetti();
+        }
+        if (compatPercent) compatPercent.textContent = current + '%';
+        const offset = 327 - (327 * current / 100);
+        if (compatFill) compatFill.style.strokeDashoffset = offset;
+      }, 40);
+    });
+  }
 
   // ============================================================
-  // ПИСЬМО (эффект печати — оптимизирован через requestAnimationFrame)
+  // ПИСЬМО
   // ============================================================
   let letterStarted = false;
 
   function typeLetter() {
-    if (letterStarted) return;
+    if (letterStarted || !letterTextEl) return;
     letterStarted = true;
 
     const text = letterFullText;
@@ -1071,9 +1124,8 @@
 
     function type() {
       if (i < text.length) {
-        // Прибавляем сразу по 2-3 символа для скорости
-        const chunk = 2;
-        letterTextEl.textContent += text.substr(i, chunk);
+        const chunk = 3;
+        letterTextEl.textContent += text.substring(i, i + chunk);
         i += chunk;
 
         if (i - lastBlotIndex > 100) {
@@ -1104,22 +1156,24 @@
   // ============================================================
   let secretTyped = false;
 
-  secretTrigger.addEventListener('click', () => {
-    secretContent.classList.toggle('active');
-    if (secretContent.classList.contains('active') && !secretTyped) {
-      secretTyped = true;
-      let i = 0;
-      function type() {
-        if (i < secretMessage.length) {
-          const chunk = 3;
-          secretTextEl.textContent += secretMessage.substr(i, chunk);
-          i += chunk;
-          setTimeout(type, 18);
+  if (secretTrigger) {
+    secretTrigger.addEventListener('click', () => {
+      secretContent.classList.toggle('active');
+      if (secretContent.classList.contains('active') && !secretTyped) {
+        secretTyped = true;
+        let i = 0;
+        function type() {
+          if (i < secretMessage.length) {
+            const chunk = 3;
+            secretTextEl.textContent += secretMessage.substring(i, i + chunk);
+            i += chunk;
+            setTimeout(type, 18);
+          }
         }
+        setTimeout(type, 400);
       }
-      setTimeout(type, 400);
-    }
-  });
+    });
+  }
 
   // ============================================================
   // ПИСЬМО В БУДУЩЕЕ
@@ -1152,16 +1206,17 @@
     const hours = Math.floor((totalSeconds % 86400) / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
-    fcDays.textContent = days;
-    fcHours.textContent = String(hours).padStart(2, '0');
-    fcMinutes.textContent = String(minutes).padStart(2, '0');
-    fcSeconds.textContent = String(seconds).padStart(2, '0');
+    if (fcDays) fcDays.textContent = days;
+    if (fcHours) fcHours.textContent = String(hours).padStart(2, '0');
+    if (fcMinutes) fcMinutes.textContent = String(minutes).padStart(2, '0');
+    if (fcSeconds) fcSeconds.textContent = String(seconds).padStart(2, '0');
   }
 
   function openFutureLetter() {
+    if (!futureLetterBox) return;
     futureLetterBox.classList.add('opened');
-    futureLock.textContent = '💌';
-    futureTitle.textContent = 'Письмо открыто 💜';
+    if (futureLock) futureLock.textContent = '💌';
+    if (futureTitle) futureTitle.textContent = 'Письмо открыто 💜';
     localStorage.setItem(STORAGE_FUTURE_UNLOCKED, 'true');
 
     if (futureInterval) clearInterval(futureInterval);
@@ -1170,7 +1225,7 @@
     function type() {
       if (i < futureLetterBody.length) {
         const chunk = 3;
-        futureLetterText.textContent += futureLetterBody.substr(i, chunk);
+        futureLetterText.textContent += futureLetterBody.substring(i, i + chunk);
         i += chunk;
         setTimeout(type, 20);
       }
@@ -1186,48 +1241,58 @@
     futureInterval = setInterval(updateFutureCountdown, 1000);
   }
 
-  futureOpenBtn.addEventListener('click', () => {
-    const now = new Date();
-    if (now >= FUTURE_DATE) {
-      openFutureLetter();
-    } else {
-      futureLetterBox.classList.add('denied');
-      futureHint.textContent = 'Ещё рано! Письмо откроется, когда придёт время 💜';
-      futureHint.classList.add('visible');
-      setTimeout(() => futureLetterBox.classList.remove('denied'), 600);
-      setTimeout(() => futureHint.classList.remove('visible'), 3500);
-    }
-  });
+  if (futureOpenBtn) {
+    futureOpenBtn.addEventListener('click', () => {
+      const now = new Date();
+      if (now >= FUTURE_DATE) {
+        openFutureLetter();
+      } else {
+        futureLetterBox.classList.add('denied');
+        if (futureHint) {
+          futureHint.textContent = 'Ещё рано! Письмо откроется, когда придёт время 💜';
+          futureHint.classList.add('visible');
+        }
+        setTimeout(() => futureLetterBox.classList.remove('denied'), 600);
+        setTimeout(() => { if (futureHint) futureHint.classList.remove('visible'); }, 3500);
+      }
+    });
+  }
 
-  futureSecretForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const value = futureSecretInput.value.trim().toLowerCase();
-    if (value === FUTURE_SECRET_CODE) {
-      futureSecretInput.classList.remove('error');
-      futureSecretHint.classList.remove('visible');
-      openFutureLetter();
-    } else {
-      futureSecretInput.classList.add('error');
-      futureSecretHint.textContent = 'Неверный код. Попробуй ещё раз 😊';
-      futureSecretHint.classList.add('visible');
-      setTimeout(() => futureSecretInput.classList.remove('error'), 600);
-      setTimeout(() => futureSecretHint.classList.remove('visible'), 3000);
-    }
-  });
+  if (futureSecretForm) {
+    futureSecretForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const value = futureSecretInput.value.trim().toLowerCase();
+      if (value === FUTURE_SECRET_CODE) {
+        futureSecretInput.classList.remove('error');
+        futureSecretHint.classList.remove('visible');
+        openFutureLetter();
+      } else {
+        futureSecretInput.classList.add('error');
+        futureSecretHint.textContent = 'Неверный код. Попробуй ещё раз 😊';
+        futureSecretHint.classList.add('visible');
+        setTimeout(() => futureSecretInput.classList.remove('error'), 600);
+        setTimeout(() => futureSecretHint.classList.remove('visible'), 3000);
+      }
+    });
+  }
 
   // ============================================================
   // СЮРПРИЗ
   // ============================================================
-  surpriseBtn.addEventListener('click', () => {
-    const msg = surpriseMessages[Math.floor(Math.random() * surpriseMessages.length)];
-    surpriseEmoji.textContent = msg.emoji;
-    surpriseText.textContent = msg.text;
-    surpriseModal.classList.add('active');
-  });
-  surpriseClose.addEventListener('click', () => surpriseModal.classList.remove('active'));
-  surpriseModal.addEventListener('click', (e) => {
-    if (e.target === surpriseModal) surpriseModal.classList.remove('active');
-  });
+  if (surpriseBtn) {
+    surpriseBtn.addEventListener('click', () => {
+      const msg = surpriseMessages[Math.floor(Math.random() * surpriseMessages.length)];
+      surpriseEmoji.textContent = msg.emoji;
+      surpriseText.textContent = msg.text;
+      surpriseModal.classList.add('active');
+    });
+  }
+  if (surpriseClose) surpriseClose.addEventListener('click', () => surpriseModal.classList.remove('active'));
+  if (surpriseModal) {
+    surpriseModal.addEventListener('click', (e) => {
+      if (e.target === surpriseModal) surpriseModal.classList.remove('active');
+    });
+  }
 
   // ============================================================
   // LIGHTBOX
@@ -1242,6 +1307,7 @@
 
   function updateLightbox() {
     const item = galleryData[lightboxIndex];
+    if (!item) return;
     lightboxImg.src = item.src;
     lightboxImg.alt = item.caption;
     lightboxCaption.textContent = item.caption;
@@ -1252,37 +1318,45 @@
     lightbox.classList.remove('active');
   }
 
-  galleryGrid.addEventListener('click', (e) => {
-    const item = e.target.closest('.gallery-item');
-    if (item) openLightbox(parseInt(item.dataset.index, 10));
-  });
+  if (galleryGrid) {
+    galleryGrid.addEventListener('click', (e) => {
+      const item = e.target.closest('.gallery-item');
+      if (item) openLightbox(parseInt(item.dataset.index, 10));
+    });
+  }
 
-  lightboxClose.addEventListener('click', closeLightbox);
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) closeLightbox();
-  });
-  lightboxPrev.addEventListener('click', (e) => {
-    e.stopPropagation();
-    lightboxIndex = (lightboxIndex - 1 + galleryData.length) % galleryData.length;
-    updateLightbox();
-  });
-  lightboxNext.addEventListener('click', (e) => {
-    e.stopPropagation();
-    lightboxIndex = (lightboxIndex + 1) % galleryData.length;
-    updateLightbox();
-  });
+  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+  if (lightbox) {
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+  }
+  if (lightboxPrev) {
+    lightboxPrev.addEventListener('click', (e) => {
+      e.stopPropagation();
+      lightboxIndex = (lightboxIndex - 1 + galleryData.length) % galleryData.length;
+      updateLightbox();
+    });
+  }
+  if (lightboxNext) {
+    lightboxNext.addEventListener('click', (e) => {
+      e.stopPropagation();
+      lightboxIndex = (lightboxIndex + 1) % galleryData.length;
+      updateLightbox();
+    });
+  }
 
   document.addEventListener('keydown', (e) => {
-    if (!lightbox.classList.contains('active')) return;
+    if (!lightbox || !lightbox.classList.contains('active')) return;
     if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft') lightboxPrev.click();
-    if (e.key === 'ArrowRight') lightboxNext.click();
+    if (e.key === 'ArrowLeft' && lightboxPrev) lightboxPrev.click();
+    if (e.key === 'ArrowRight' && lightboxNext) lightboxNext.click();
   });
 
   // ============================================================
   // EASTER EGG
   // ============================================================
-  const easterEggTarget = document.querySelector('footer .heart-icon');
+  const easterEggTargets = document.querySelectorAll('footer .heart-icon');
   const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
   let konamiIndex = 0;
 
@@ -1291,7 +1365,7 @@
     welcomeConfetti();
   }
 
-  if (easterEggTarget) easterEggTarget.addEventListener('click', showEaster);
+  easterEggTargets.forEach(el => el.addEventListener('click', showEaster));
 
   document.addEventListener('keydown', (e) => {
     if (e.key === KONAMI[konamiIndex]) {
@@ -1305,10 +1379,12 @@
     }
   });
 
-  easterClose.addEventListener('click', () => easterModal.classList.remove('active'));
-  easterModal.addEventListener('click', (e) => {
-    if (e.target === easterModal) easterModal.classList.remove('active');
-  });
+  if (easterClose) easterClose.addEventListener('click', () => easterModal.classList.remove('active'));
+  if (easterModal) {
+    easterModal.addEventListener('click', (e) => {
+      if (e.target === easterModal) easterModal.classList.remove('active');
+    });
+  }
 
   // ============================================================
   // ИГРА
@@ -1320,10 +1396,10 @@
   let gameTimer = null;
   let gameSpawnTimer = null;
   let gameBest = parseInt(localStorage.getItem('nicole-game-best') || '0', 10);
-  gameBestEl.textContent = gameBest;
+  if (gameBestEl) gameBestEl.textContent = gameBest;
 
   function spawnHeart() {
-    if (!gameActive) return;
+    if (!gameActive || !gameArea) return;
     const heart = document.createElement('div');
     heart.className = 'catchable-heart';
     heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
@@ -1337,7 +1413,7 @@
       e.stopPropagation();
       if (!gameActive) return;
       gameScore++;
-      gameScoreEl.textContent = gameScore;
+      if (gameScoreEl) gameScoreEl.textContent = gameScore;
       for (let i = 0; i < 4; i++) {
         const particle = document.createElement('span');
         particle.className = 'catch-particle';
@@ -1355,22 +1431,26 @@
   }
 
   function startGame() {
-    if (gameActive) return;
+    if (gameActive || !gameArea) return;
     gameActive = true;
     gameScore = 0;
     gameTimeLeft = 30;
-    gameScoreEl.textContent = '0';
-    gameTimeEl.textContent = '30';
-    gameResult.textContent = '';
-    gameResult.classList.remove('visible');
-    gameStartBtn.textContent = '⏸ Игра идёт...';
-    gameStartBtn.disabled = true;
+    if (gameScoreEl) gameScoreEl.textContent = '0';
+    if (gameTimeEl) gameTimeEl.textContent = '30';
+    if (gameResult) {
+      gameResult.textContent = '';
+      gameResult.classList.remove('visible');
+    }
+    if (gameStartBtn) {
+      gameStartBtn.textContent = '⏸ Игра идёт...';
+      gameStartBtn.disabled = true;
+    }
     gameArea.classList.add('playing');
     gameArea.innerHTML = '';
 
     gameTimer = setInterval(() => {
       gameTimeLeft--;
-      gameTimeEl.textContent = gameTimeLeft;
+      if (gameTimeEl) gameTimeEl.textContent = gameTimeLeft;
       if (gameTimeLeft <= 0) endGame();
     }, 1000);
 
@@ -1382,16 +1462,20 @@
     gameActive = false;
     clearInterval(gameTimer);
     clearInterval(gameSpawnTimer);
-    gameArea.classList.remove('playing');
-    gameStartBtn.textContent = '▶ Старт';
-    gameStartBtn.disabled = false;
-    gameArea.querySelectorAll('.catchable-heart').forEach(h => h.remove());
+    if (gameArea) {
+      gameArea.classList.remove('playing');
+      gameArea.querySelectorAll('.catchable-heart').forEach(h => h.remove());
+    }
+    if (gameStartBtn) {
+      gameStartBtn.textContent = '▶ Старт';
+      gameStartBtn.disabled = false;
+    }
 
     let message = '';
     if (gameScore > gameBest) {
       gameBest = gameScore;
       localStorage.setItem('nicole-game-best', String(gameBest));
-      gameBestEl.textContent = gameBest;
+      if (gameBestEl) gameBestEl.textContent = gameBest;
       message = `🎉 Новый рекорд! Ты поймала ${gameScore} сердечек!`;
       welcomeConfetti();
     } else if (gameScore >= 25) message = `💜 Вау! ${gameScore} сердечек — ты невероятна!`;
@@ -1399,21 +1483,23 @@
     else if (gameScore >= 5) message = `😊 Хорошо! ${gameScore} сердечек у тебя в руках.`;
     else message = `Поймано ${gameScore} сердечек. Попробуй ещё раз! 💜`;
 
-    gameResult.textContent = message;
-    gameResult.classList.add('visible');
+    if (gameResult) {
+      gameResult.textContent = message;
+      gameResult.classList.add('visible');
+    }
   }
 
-  gameStartBtn.addEventListener('click', startGame);
+  if (gameStartBtn) gameStartBtn.addEventListener('click', startGame);
 
   // ============================================================
   // АУДИОПЛЕЕР
   // ============================================================
   let audioStarted = false;
   let previousVolume = 0.7;
-  bgAudio.volume = 0.7;
+  if (bgAudio) bgAudio.volume = 0.7;
 
   function startAudio() {
-    if (audioStarted) return;
+    if (audioStarted || !bgAudio) return;
     audioStarted = true;
     bgAudio.volume = 0;
     bgAudio.play().then(() => {
@@ -1423,55 +1509,69 @@
         if (v >= 0.7) { v = 0.7; clearInterval(fade); }
         bgAudio.volume = v;
       }, 60);
-      playPauseBtn.textContent = '⏸';
+      if (playPauseBtn) playPauseBtn.textContent = '⏸';
     }).catch(() => { audioStarted = false; });
   }
 
-  playPauseBtn.addEventListener('click', () => {
-    if (bgAudio.paused) {
-      bgAudio.play();
-      playPauseBtn.textContent = '⏸';
-    } else {
-      bgAudio.pause();
-      playPauseBtn.textContent = '▶';
-    }
-  });
+  if (playPauseBtn) {
+    playPauseBtn.addEventListener('click', () => {
+      if (bgAudio.paused) {
+        bgAudio.play();
+        playPauseBtn.textContent = '⏸';
+      } else {
+        bgAudio.pause();
+        playPauseBtn.textContent = '▶';
+      }
+    });
+  }
 
-  volumeSlider.addEventListener('input', () => {
-    bgAudio.volume = parseFloat(volumeSlider.value);
-    previousVolume = bgAudio.volume;
-    muteBtn.textContent = bgAudio.volume === 0 ? '🔇' : '🔊';
-  });
-
-  muteBtn.addEventListener('click', () => {
-    if (bgAudio.volume > 0) {
+  if (volumeSlider) {
+    volumeSlider.addEventListener('input', () => {
+      bgAudio.volume = parseFloat(volumeSlider.value);
       previousVolume = bgAudio.volume;
-      bgAudio.volume = 0;
-      volumeSlider.value = 0;
-      muteBtn.textContent = '🔇';
-    } else {
-      bgAudio.volume = previousVolume || 0.7;
-      volumeSlider.value = bgAudio.volume;
-      muteBtn.textContent = '🔊';
-    }
-  });
+      if (muteBtn) muteBtn.textContent = bgAudio.volume === 0 ? '🔇' : '🔊';
+    });
+  }
 
-  loopBtn.addEventListener('click', () => {
-    bgAudio.loop = !bgAudio.loop;
-    loopBtn.style.opacity = bgAudio.loop ? '1' : '0.5';
-  });
+  if (muteBtn) {
+    muteBtn.addEventListener('click', () => {
+      if (bgAudio.volume > 0) {
+        previousVolume = bgAudio.volume;
+        bgAudio.volume = 0;
+        if (volumeSlider) volumeSlider.value = 0;
+        muteBtn.textContent = '🔇';
+      } else {
+        bgAudio.volume = previousVolume || 0.7;
+        if (volumeSlider) volumeSlider.value = bgAudio.volume;
+        muteBtn.textContent = '🔊';
+      }
+    });
+  }
 
-  document.addEventListener('click', startAudio, { once: true });
+  if (loopBtn) {
+    loopBtn.addEventListener('click', () => {
+      bgAudio.loop = !bgAudio.loop;
+      loopBtn.style.opacity = bgAudio.loop ? '1' : '0.5';
+    });
+  }
+
+  // Запуск аудио — только по клику на элементы, НЕ на любые клики
+  const audioTriggers = [playPauseBtn, muteBtn, loopBtn, volumeSlider].filter(Boolean);
+  audioTriggers.forEach(el => {
+    el.addEventListener('click', startAudio, { once: true });
+  });
 
   // ============================================================
   // НАВИГАЦИЯ
   // ============================================================
-  navBar.querySelectorAll('button[data-goto]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = document.getElementById(btn.dataset.goto);
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (navBar) {
+    navBar.querySelectorAll('button[data-goto]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = document.getElementById(btn.dataset.goto);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     });
-  });
+  }
 
   // ============================================================
   // REVEAL
@@ -1484,15 +1584,17 @@
 
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  const letterObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) typeLetter();
-    });
-  }, { threshold: 0.3 });
-  letterObserver.observe(letterPaper);
+  if (letterPaper) {
+    const letterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) typeLetter();
+      });
+    }, { threshold: 0.3 });
+    letterObserver.observe(letterPaper);
+  }
 
   // ============================================================
-  // ПРОГРЕСС ЧТЕНИЯ (throttle через rAF)
+  // ПРОГРЕСС ЧТЕНИЯ
   // ============================================================
   let scrollTicking = false;
   let lastScrollY = 0;
@@ -1504,16 +1606,16 @@
         const scrollTop = lastScrollY;
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
         const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        readingProgress.style.width = percent + '%';
+        if (readingProgress) readingProgress.style.width = percent + '%';
 
         if (scrollTop > 400) {
-          navBar.classList.add('visible');
-          audioPlayer.classList.add('visible');
-          backToTop.classList.add('visible');
+          if (navBar) navBar.classList.add('visible');
+          if (audioPlayer) audioPlayer.classList.add('visible');
+          if (backToTop) backToTop.classList.add('visible');
         } else {
-          navBar.classList.remove('visible');
-          audioPlayer.classList.remove('visible');
-          backToTop.classList.remove('visible');
+          if (navBar) navBar.classList.remove('visible');
+          if (audioPlayer) audioPlayer.classList.remove('visible');
+          if (backToTop) backToTop.classList.remove('visible');
         }
         scrollTicking = false;
       });
@@ -1523,9 +1625,11 @@
 
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  if (backToTop) {
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 
   // ============================================================
   // ПРИОСТАНОВКА АНИМАЦИЙ ПРИ СКРЫТОЙ ВКЛАДКЕ
@@ -1546,7 +1650,7 @@
   window.addEventListener('load', () => {
     if (sessionStorage.getItem(STORAGE_UNLOCKED) === 'true') {
       setTimeout(() => {
-        if (heroTitleEl.textContent === '') typeHero();
+        if (heroTitleEl && heroTitleEl.textContent === '') typeHero();
       }, 500);
     }
   });
