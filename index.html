@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>История моих чувств к Николь</title>
+
+  <meta name="description" content="История моих чувств к Николь — моменты, стихи и письмо">
+  <meta property="og:title" content="История моих чувств к Николь">
+  <meta property="og:description" content="Сделано с любовью ♥">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💜</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="locked">
+
+  <div class="starfield" id="starfield" aria-hidden="true"></div>
+
+  <!-- ЭКРАН БЛОКИРОВКИ -->
+  <div class="lock-screen" id="lockScreen">
+    <div class="lock-card">
+      <button class="lock-theme-toggle" id="lockThemeToggle" aria-label="Переключить тему">🌙</button>
+      <span class="lock-icon" id="lockIcon">🔐</span>
+      <h2 class="lock-title">Это личная страница</h2>
+      <p class="lock-subtitle">Введи пароль, чтобы продолжить ♥</p>
+      <form class="lock-form" id="lockForm" autocomplete="off">
+        <input type="password" class="lock-input" id="lockInput" placeholder="Пароль..." autocomplete="off" aria-label="Пароль">
+        <button type="submit" class="lock-btn">Открыть</button>
+        <p class="lock-error" id="lockError"></p>
+      </form>
+      <p class="lock-hint">Подсказка: что-то вкусное и круглое 🥯</p>
+    </div>
+  </div>
+
+  <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
+  <div class="floating-hearts" id="floatingHearts" aria-hidden="true"></div>
+
+  <nav class="nav-bar" id="navBar" aria-label="Навигация по странице">
+    <a href="#hero">♥ Начало</a>
+    <a href="#firstMeeting">Встреча</a>
+    <a href="#timeline">Путь</a>
+    <a href="#moments">Моменты</a>
+    <a href="#reasons">Почему</a>
+    <a href="#nicknames">Прозвища</a>
+    <a href="#compatibility">Совместимость</a>
+    <a href="#weather">Погода</a>
+    <a href="#hundredReasons">100 причин</a>
+    <a href="#poemSection">Чувства</a>
+    <a href="#compliment">Комплимент</a>
+    <a href="#game">Игра</a>
+    <a href="#letterSection">Письмо</a>
+    <a href="#secretSection">Секрет</a>
+    <a href="#futureLetter">Будущее</a>
+  </nav>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">🌙</button>
+
+  <header class="hero" id="hero">
+    <div class="hero-bg-circles" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+    <h1 id="heroTitle" aria-label="История моих чувств к Николь"></h1>
+    <p class="subtitle"><span id="heroDate"></span></p>
+
+    <div class="live-counter" id="liveCounter" aria-label="Время вместе">
+      <div class="counter-block"><span class="counter-num" id="cDays">0</span><span class="counter-label">Дней</span></div>
+      <div class="counter-block"><span class="counter-num" id="cHours">0</span><span class="counter-label">Часов</span></div>
+      <div class="counter-block"><span class="counter-num" id="cMinutes">0</span><span class="counter-label">Минут</span></div>
+      <div class="counter-block"><span class="counter-num" id="cSeconds">0</span><span class="counter-label">Секунд</span></div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">↓ листайте ↓</div>
+  </header>
+
+  <section class="reveal" id="firstMeeting">
+    <h2 class="section-title">Наша первая встреча</h2>
+    <div class="first-meeting">
+      <div class="text">
+        <p>Я помню, как мы впервые заговорили, и именно из-за тебя я снова начал смеяться.</p>
+        <p>Из-за тебя я засыпал с улыбкой на лице, появилась мотивация снова что-то делать, и из-за тебя мои проблемы не казались такими уж серьезными.</p>
+        <p>Ты действительно сделала мою жизнь лучше, просто присутствуя в ней.</p>
+      </div>
+      <div class="photo-frame">
+        <img src="https://storage.yandexcloud.net/b.fotovssylku.ru/2026/09/27/image3b9c2db46cf7ee2b.md.png" alt="Наша первая встреча" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal" id="timeline">
+    <h2 class="section-title">Наш путь вместе</h2>
+    <div class="timeline" id="timelineContainer"></div>
+  </section>
+
+  <section class="reveal" id="moments">
+    <h2 class="section-title">Моменты, которые я помню</h2>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </section>
+
+  <section class="reveal" id="reasons">
+    <h2 class="section-title">За что я тебя люблю</h2>
+    <div class="reasons-grid" id="reasonsGrid"></div>
+  </section>
+
+ <!-- НАШИ ПРОЗВИЩА -->
+<section class="reveal nicknames-section" id="nicknames">
+  <div class="nicknames-header">
+    <span class="nicknames-eyebrow">Так мы называем друг друга</span>
+    <h2 class="section-title">Наши прозвища</h2>
+    <p class="nicknames-subtitle">Самые тёплые слова, которые мы говорим друг другу каждый день</p>
+  </div>
+
+  <div class="nicknames-grid">
+
+    <!-- ЕЁ КАРТОЧКА -->
+    <article class="nickname-card her-card">
+      <div class="nickname-glow"></div>
+      <div class="nickname-badge">Её</div>
+
+      <div class="nickname-avatar">
+        <span class="nickname-avatar-emoji">🐯</span>
+        <span class="nickname-avatar-ring"></span>
+      </div>
+
+      <h3 class="nickname-name">Как я называю тебя</h3>
+
+      <ul class="nickname-list">
+        <li class="nickname-item">
+          <span class="nickname-item-icon">🐯</span>
+          <div class="nickname-item-content">
+            <span class="nickname-item-title">Тигрица</span>
+            <span class="nickname-item-note">Когда ты злишься — но всё равно самая красивая</span>
+          </div>
+        </li>
+        <li class="nickname-item">
+          <span class="nickname-item-icon">🥐</span>
+          <div class="nickname-item-content">
+            <span class="nickname-item-title">Булочка</span>
+            <span class="nickname-item-note">Мягкая, тёплая и сладкая</span>
+          </div>
+        </li>
+        <li class="nickname-item">
+          <span class="nickname-item-icon">🌸</span>
+          <div class="nickname-item-content">
+            <span class="nickname-item-title">Малышка</span>
+            <span class="nickname-item-note">Самая нежная на свете</span>
+          </div>
+        </li>
+      </ul>
+
+      <div class="nickname-footer">
+        <span class="footer-line"></span>
+        <span class="footer-heart">💜</span>
+        <span class="footer-line"></span>
+      </div>
+    </article>
+
+    <!-- ЦЕНТР -->
+    <div class="nickname-connector" aria-hidden="true">
+      <span class="connector-heart">💜</span>
+      <span class="connector-pulse"></span>
+    </div>
+
+    <!-- МОЯ КАРТОЧКА -->
+    <article class="nickname-card my-card">
+      <div class="nickname-glow"></div>
+      <div class="nickname-badge">Моё</div>
+
+      <div class="nickname-avatar">
+        <span class="nickname-avatar-emoji">🥯</span>
+        <span class="nickname-avatar-ring"></span>
+      </div>
+
+      <h3 class="nickname-name">Как ты называешь меня</h3>
+
+      <ul class="nickname-list">
+        <li class="nickname-item">
+          <span class="nickname-item-icon">🥯</span>
+          <div class="nickname-item-content">
+            <span class="nickname-item-title">Моё бублик</span>
+            <span class="nickname-item-note">Твоё личное, только для нас двоих</span>
+          </div>
+        </li>
+      </ul>
+
+      <div class="nickname-footer">
+        <span class="footer-line"></span>
+        <span class="footer-heart">♥</span>
+        <span class="footer-line"></span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+  <!-- НАША СОВМЕСТИМОСТЬ — ГЕНЕРАТОР -->
+  <section class="reveal compatibility-section" id="compatibility">
+    <div class="compat-header">
+      <span class="compat-eyebrow">Магия чисел</span>
+      <h2 class="section-title">Наша совместимость</h2>
+      <p class="compatibility-subtitle">Нажми на кнопку — и узнай, насколько мы идеальны друг для друга 💜</p>
+    </div>
+
+    <div class="compat-generator" id="compatGenerator">
+      <div class="compat-idle" id="compatIdle">
+        <div class="compat-heart-pulse">
+          <span>💜</span>
+        </div>
+        <button class="compat-start-btn" id="compatStartBtn">
+          ✨ Проверить совместимость ✨
+        </button>
+        <p class="compat-hint">Готов узнать результат?</p>
+      </div>
+
+      <div class="compat-loading" id="compatLoading">
+        <div class="compat-loading-circle"></div>
+        <p class="compat-loading-text">Считаем звёзды...</p>
+      </div>
+
+      <div class="compat-result" id="compatResult">
+        <div class="compat-ring">
+          <svg viewBox="0 0 200 200" class="compat-svg">
+            <defs>
+              <linearGradient id="compatGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#AB47BC" />
+                <stop offset="100%" stop-color="#FFB74D" />
+              </linearGradient>
+            </defs>
+            <circle class="compat-track" cx="100" cy="100" r="85"></circle>
+            <circle class="compat-progress" cx="100" cy="100" r="85" id="compatCircle"></circle>
+          </svg>
+          <div class="compat-center">
+            <span class="compat-percent" id="compatPercent">0%</span>
+            <span class="compat-label">совместимость</span>
+          </div>
+        </div>
+
+        <div class="compat-verdict" id="compatVerdict"></div>
+
+        <div class="compat-categories" id="compatCategories"></div>
+
+        <button class="compat-restart-btn" id="compatRestartBtn">
+          🔄 Проверить снова
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- НАША ПОГОДА — МЕТАФОРИЧЕСКАЯ -->
+  <section class="reveal weather-section" id="weather">
+    <div class="weather-header">
+      <span class="weather-eyebrow">Прогноз на сегодня</span>
+      <h2 class="section-title">Наша погода</h2>
+      <p class="weather-subtitle">Погода — это не только градусы. Это то, что я чувствую рядом с тобой</p>
+    </div>
+
+    <div class="weather-display" id="weatherDisplay">
+      <div class="weather-icon-big" id="weatherIcon">☀️</div>
+      <h3 class="weather-state" id="weatherState">Солнечно</h3>
+      <p class="weather-poetic" id="weatherPoetic">Сегодня солнечно, потому что ты рядом</p>
+      <div class="weather-details" id="weatherDetails"></div>
+      <button class="weather-refresh-btn" id="weatherRefreshBtn">
+        🔄 Сменить настроение погоды
+      </button>
+    </div>
+  </section>
+
+  <!-- 100 ПРИЧИН -->
+  <section class="reveal reasons100-section" id="hundredReasons">
+    <div class="reasons100-header">
+      <span class="reasons100-eyebrow">Целая сотня</span>
+      <h2 class="section-title">100 причин, почему я тебя люблю</h2>
+      <p class="reasons100-subtitle">Нажми на любую — и она откроется 💜</p>
+    </div>
+
+    <div class="reasons100-progress">
+      <div class="progress-bar-100">
+        <div class="progress-fill-100" id="progressFill100"></div>
+      </div>
+      <p class="progress-text-100" id="progressText100">Открыто: 0 / 100</p>
+    </div>
+
+    <div class="reasons100-grid" id="reasons100Grid"></div>
+
+    <button class="reasons100-openall" id="reasons100OpenAll">
+      ✨ Открыть все причины ✨
+    </button>
+  </section>
+
+  <section class="reveal" id="tenMoments">
+    <h2 class="section-title">10 моментов, когда я понял, что люблю тебя</h2>
+    <div class="moments-list" id="tenMomentsList"></div>
+  </section>
+
+  <section class="poem-section reveal" id="poemSection">
+    <h2 class="section-title">Что я чувствую</h2>
+    <div class="poem-lines" id="poemLines"></div>
+  </section>
+
+  <section class="compliment-section reveal" id="compliment">
+    <h2 class="section-title">Скажи мне что-то приятное</h2>
+    <div class="compliment-box">
+      <p class="compliment-text" id="complimentText">Нажми на кнопку ниже — и получишь тёплые слова, которые я тебе говорю каждый день 💜</p>
+    </div>
+    <button class="compliment-btn" id="complimentBtn">✨ Сказать комплимент ✨</button>
+    <p class="compliment-counter" id="complimentCounter">Сказано комплиментов: 0</p>
+  </section>
+
+  <section class="game-section reveal" id="game">
+    <h2 class="section-title">Поймай сердечко</h2>
+    <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--text-accent); margin-bottom: 1rem;">Поймай как можно больше сердечек за 30 секунд</p>
+    <div class="game-info">
+      <div class="game-stat">
+        <span class="game-stat-value" id="gameScore">0</span>
+        <span class="game-stat-label">Поймано</span>
+      </div>
+      <div class="game-stat">
+        <span class="game-stat-value" id="gameTime">30</span>
+        <span class="game-stat-label">Секунд</span>
+      </div>
+      <div class="game-stat">
+        <span class="game-stat-value" id="gameBest">0</span>
+        <span class="game-stat-label">Рекорд</span>
+      </div>
+    </div>
+    <div class="game-area" id="gameArea"></div>
+    <button class="game-start-btn" id="gameStartBtn">▶ Старт</button>
+    <p class="game-result" id="gameResult"></p>
+  </section>
+
+  <div class="surprise-btn-wrap reveal">
+    <button class="surprise-btn" id="surpriseBtn">✨ Нажми на меня ✨</button>
+  </div>
+
+  <section class="letter-section reveal" id="letterSection">
+    <h2 class="section-title">Письмо для Николь</h2>
+    <div class="letter-paper" id="letterPaper">
+      <div class="letter-text" id="letterText"></div>
+    </div>
+  </section>
+
+  <section class="secret-section reveal" id="secretSection">
+    <h2 class="section-title">Что-то очень личное</h2>
+    <button class="secret-trigger" id="secretTrigger">
+      <span class="secret-trigger-icon">💌</span>
+      <span>Что я хочу тебе сказать, но стесняюсь</span>
+    </button>
+    <div class="secret-content" id="secretContent">
+      <div class="secret-paper">
+        <div class="secret-text" id="secretText"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="future-letter-section reveal" id="futureLetter">
+    <h2 class="section-title">Письмо в будущее</h2>
+    <div class="future-letter-box" id="futureLetterBox">
+      <span class="future-lock" id="futureLock">🔒</span>
+      <h3 class="future-title" id="futureTitle">Это письмо откроется 04 февраля 2027 года</h3>
+      <p class="future-subtitle" id="futureSubtitle">
+        Здесь спрятаны слова, которые я хочу сказать тебе через год. Каждый день приближает момент, когда ты их прочитаешь.
+      </p>
+
+      <div class="future-countdown" id="futureCountdown" aria-label="Обратный отсчёт">
+        <div class="future-countdown-block">
+          <span class="future-countdown-num" id="fcDays">0</span>
+          <span class="future-countdown-label">Дней</span>
+        </div>
+        <div class="future-countdown-block">
+          <span class="future-countdown-num" id="fcHours">0</span>
+          <span class="future-countdown-label">Часов</span>
+        </div>
+        <div class="future-countdown-block">
+          <span class="future-countdown-num" id="fcMinutes">0</span>
+          <span class="future-countdown-label">Минут</span>
+        </div>
+        <div class="future-countdown-block">
+          <span class="future-countdown-num" id="fcSeconds">0</span>
+          <span class="future-countdown-label">Секунд</span>
+        </div>
+      </div>
+
+      <button class="future-open-btn" id="futureOpenBtn">Попробовать открыть</button>
+      <p class="future-hint" id="futureHint"></p>
+
+      <div class="future-secret">
+        <span class="future-secret-label">Или введи секретный код, если знаешь ✨</span>
+        <form class="future-secret-form" id="futureSecretForm" autocomplete="off">
+          <input type="text" class="future-secret-input" id="futureSecretInput" placeholder="Секретный код..." autocomplete="off" aria-label="Секретный пароль">
+          <button type="submit" class="future-secret-btn">Открыть</button>
+        </form>
+        <p class="future-secret-hint" id="futureSecretHint"></p>
+      </div>
+
+      <div class="future-letter-content" id="futureLetterContent">
+        <div class="future-envelope">
+          <div class="future-letter-text" id="futureLetterText"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="heart-icon">♥</span> Сделано с любовью для Николь <span class="heart-icon">♥</span><br>
+    <span id="footerYear"></span>
+  </footer>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр фото">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Закрыть">&times;</button>
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Предыдущее">‹</button>
+    <img src="" alt="" id="lightboxImg">
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Следующее">›</button>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+  </div>
+
+  <div class="surprise-modal" id="surpriseModal" role="dialog" aria-modal="true">
+    <div class="surprise-card">
+      <span class="surprise-emoji" id="surpriseEmoji">💜</span>
+      <p class="surprise-text" id="surpriseText"></p>
+      <button class="surprise-close" id="surpriseClose">Спасибо ♥</button>
+    </div>
+  </div>
+
+  <div class="easteregg-modal" id="eastereggModal" role="dialog" aria-modal="true">
+    <div class="easteregg-card">
+      <span class="easteregg-emoji" id="eastereggEmoji">🥯</span>
+      <h3 class="easteregg-title" id="eastereggTitle">Ты нашла секрет!</h3>
+      <p class="easteregg-text" id="eastereggText"></p>
+      <button class="easteregg-close" id="eastereggClose">Закрыть</button>
+    </div>
+  </div>
+
+  <div class="audio-player" id="audioPlayer">
+    <button id="playPauseBtn" aria-label="Play/Pause">▶</button>
+    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.7" aria-label="Громкость">
+    <button id="muteBtn" aria-label="Mute/Unmute">🔊</button>
+    <button id="loopBtn" aria-label="Loop">🔁</button>
+    <audio id="bgAudio" loop preload="metadata">
+      <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+      Ваш браузер не поддерживает аудио.
+    </audio>
+  </div>
+
+  <button class="back-to-top" id="backToTop" aria-label="Наверх">↑</button>
+
+  <script src="js/data.js"></script>
+  <script src="js/lock.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/gallery.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/letters.js"></script>
+  <script src="js/compatibility.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/reasons100.js"></script>
+  <script src="js/easteregg.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

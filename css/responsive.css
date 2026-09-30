@@ -1,0 +1,150 @@
+/* ============================================
+   RESPONSIVE — адаптивность
+   ============================================ */
+
+@media (max-width: 900px) {
+  .nicknames-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nickname-card {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .nickname-connector {
+    transform: rotate(90deg);
+    margin: 0.5rem 0;
+  }
+
+  .connector-pulse {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  section { padding: 3rem 1rem; }
+
+  .nav-bar { top: 0.5rem; padding: 0.4rem 0.6rem; }
+  .nav-bar a { font-size: 0.68rem; padding: 0.35rem 0.65rem; }
+  .theme-toggle { top: 4.5rem; right: 0.8rem; width: 40px; height: 40px; font-size: 1rem; }
+
+  .first-meeting { flex-direction: column; padding: 2rem 1.2rem; }
+  .photo-frame { transform: rotate(0deg); }
+
+  .live-counter { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+  .counter-block { padding: 0.8rem 0.4rem; }
+
+  .audio-player {
+    bottom: 1rem; right: 1rem;
+    padding: 0.5rem 0.9rem 0.5rem 0.6rem;
+    gap: 0.5rem;
+  }
+  .audio-player .volume-slider { width: 50px; }
+
+  .back-to-top { bottom: 1rem; left: 1rem; width: 42px; height: 42px; font-size: 1.2rem; }
+
+  .letter-paper { padding: 1.8rem 1rem 1.8rem 2.2rem; }
+  .gallery-grid { gap: 1.2rem; }
+
+  .lightbox-nav { width: 44px; height: 44px; font-size: 1.3rem; }
+  .lightbox-prev { left: 0.6rem; }
+  .lightbox-next { right: 0.6rem; }
+
+  .timeline { padding-left: 1.5rem; }
+  .timeline-dot { left: -1.6rem; width: 16px; height: 16px; }
+
+  .reason-card { padding: 1.5rem 1.2rem; }
+  .reason-icon { font-size: 2.2rem; }
+
+  .moment-item { padding: 1.2rem 1.2rem; gap: 1rem; }
+  .moment-num { font-size: 2rem; min-width: 45px; }
+
+  .game-area { height: 280px; }
+  .game-stat-value { font-size: 1.5rem; }
+
+  .secret-paper { padding: 1.8rem 1.2rem; }
+
+  .compat-ring { width: 200px; height: 200px; }
+  .compat-percent { font-size: 2.6rem; }
+
+  .reasons100-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.6rem;
+  }
+  .reason-100-number { font-size: 1.5rem; }
+  .reason-100-text { font-size: 0.85rem; }
+
+  .weather-display { padding: 2.5rem 1.5rem; border-radius: 32px; }
+  .weather-icon-big { font-size: 4rem; }
+}
+
+@media (max-width: 600px) {
+  .compat-categories {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 { font-size: 1.8rem; }
+  .hero .subtitle { font-size: 1rem; }
+  .gallery-grid { grid-template-columns: 1fr; }
+  .audio-player { border-radius: 40px; padding: 0.4rem 0.7rem 0.4rem 0.5rem; }
+  .audio-player .volume-slider { width: 40px; }
+  .counter-num { font-size: 1.3rem; }
+  .counter-label { font-size: 0.6rem; letter-spacing: 1px; }
+  .surprise-card { padding: 2rem 1.5rem; }
+  .surprise-text { font-size: 1.15rem; }
+  .easteregg-card { padding: 2rem 1.5rem; }
+  .easteregg-emoji { font-size: 3.5rem; }
+  .future-countdown { grid-template-columns: repeat(2, 1fr); }
+  .future-letter-box { padding: 2rem 1.2rem; }
+  .future-lock { font-size: 3.5rem; }
+  .lock-card { padding: 2.2rem 1.5rem; border-radius: 30px; }
+  .lock-icon { font-size: 3rem; }
+  .lock-title { font-size: 1.4rem; }
+  .lock-subtitle { font-size: 1rem; }
+  .lock-input { font-size: 1rem; padding: 0.9rem 1rem; }
+  .lock-btn { padding: 0.9rem 1.5rem; font-size: 0.85rem; }
+  .lock-theme-toggle {
+    top: 0.9rem;
+    right: 0.9rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  .future-secret-form { flex-direction: column; }
+  .future-secret-btn { width: 100%; }
+
+  .game-area { height: 240px; }
+  .game-info { gap: 1.2rem; }
+
+  .nickname-card {
+    padding: 2rem 1.4rem 1.5rem;
+    border-radius: 24px;
+  }
+  .nickname-name { font-size: 1.4rem; }
+  .nickname-avatar { width: 80px; height: 80px; }
+  .nickname-avatar-emoji { font-size: 2.6rem; }
+  .nickname-tag { font-size: 0.95rem; padding: 0.45rem 0.9rem; }
+  .nickname-note { font-size: 1rem; }
+  .nicknames-eyebrow { font-size: 0.6rem; letter-spacing: 3px; }
+
+  .compat-ring { width: 180px; height: 180px; }
+  .compat-percent { font-size: 2.2rem; }
+  .compat-start-btn { font-size: 0.85rem; padding: 1rem 2rem; }
+
+  .weather-display { padding: 2rem 1.2rem; border-radius: 28px; }
+  .weather-icon-big { font-size: 3.5rem; }
+  .weather-state { font-size: 1.4rem; }
+  .weather-details { gap: 1rem; }
+
+  .reasons100-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .reason-100-card { aspect-ratio: 1 / 0.8; }
+  .reason-100-number { font-size: 1.3rem; }
+  .reason-100-text { font-size: 0.8rem; }
+}
