@@ -61,6 +61,7 @@
     <button data-goto="timeline">Путь</button>
     <button data-goto="moments">Моменты</button>
     <button data-goto="reasons">Почему</button>
+    <button data-goto="hundredReasons">100 причин</button>
     <button data-goto="nicknames">Прозвища</button>
     <button data-goto="compatibility">Совместимость</button>
     <button data-goto="weather">Погода</button>
@@ -124,6 +125,28 @@
     <section class="reveal" id="reasons">
       <h2 class="section-title">За что я тебя люблю</h2>
       <div class="reasons-grid" id="reasonsGrid"></div>
+    </section>
+
+    <!-- 100 ПРИЧИН -->
+    <section class="reveal" id="hundredReasons">
+      <h2 class="section-title">100 причин, почему я тебя люблю</h2>
+      <p class="hundred-subtitle">Каждая — про тебя. Открой их все, если сможешь 💜</p>
+
+      <div class="hundred-progress-wrap">
+        <div class="hundred-progress">
+          <div class="hundred-progress-bar" id="hundredProgressBar"></div>
+          <span class="hundred-progress-text" id="hundredProgressText">0 из 100</span>
+        </div>
+        <p class="hundred-progress-level" id="hundredProgressLevel">Только начинаем ✨</p>
+        <p class="hundred-progress-remaining" id="hundredProgressRemaining">Осталось открыть: 100</p>
+      </div>
+
+      <div class="hundred-grid" id="hundredGrid"></div>
+
+      <div class="hundred-actions">
+        <button class="hundred-btn" id="hundredRandom">🎲 Открыть случайную</button>
+        <button class="hundred-btn secondary" id="hundredShowAll">Показать все 💜</button>
+      </div>
     </section>
 
     <!-- НАШИ ПРОЗВИЩА -->
